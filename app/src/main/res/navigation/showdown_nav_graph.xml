@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/showdown_nav_graph"
+    app:startDestination="@id/main_fragment">
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="com.example.showdown.ui.view.MainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/main_fragment_to_favs_fragment_action"
+            app:destination="@id/favs_fragment"/>
+        <action
+            android:id="@+id/main_fragment_to_teams_fragment_action"
+            app:destination="@id/teams_fragment"/>
+        <action
+            android:id="@+id/main_fragment_to_game_fragment_action"
+            app:destination="@id/game_fragment"/>
+        <action
+            android:id="@+id/main_fragment_to_pokedex_fragment_action"
+            app:destination="@id/pokedex_fragment">
+<!--            <argument-->
+<!--                android:name="pokedexEntryData"-->
+<!--                app:argType="com.example.showdown.data.local.entities.Pokemon"/>-->
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/favs_fragment"
+        android:name="com.example.showdown.ui.view.FavsFragment"
+        tools:layout="@layout/fragment_favs">
+        <action
+            android:id="@+id/favs_fragment_to_main_fragment_action"
+            app:destination="@id/main_fragment"/>
+        <action
+            android:id="@+id/favs_fragment_to_pokedex_fragment_action"
+            app:destination="@id/pokedex_fragment"/>
+        <argument
+            android:name="pokemonDexEntry"
+            app:argType="com.example.showdown.data.local.entities.Pokemon"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/teams_fragment"
+        android:name="com.example.showdown.ui.view.TeamsFragment"
+        tools:layout="@layout/fragment_teams">
+        <action
+            android:id="@+id/team_fragment_to_main_fragment_action"
+            app:destination="@id/main_fragment"/>
+            <action
+            android:id="@+id/team_fragment_to_team_members_fragment_action"
+            app:destination="@id/team_members_fragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/team_members_fragment"
+        android:name="com.example.showdown.ui.view.TeamMembersFragment"
+        tools:layout="@layout/fragment_team_members">
+            <action
+            android:id="@+id/team_members_fragment_to_teams_fragment_action"
+            app:destination="@id/teams_fragment"/>
+<!--            <action-->
+<!--            android:id="@+id/team_members_fragment_to_main_fragment_action"-->
+<!--            app:destination="@id/main_fragment"/>-->
+    </fragment>
+    <fragment
+        android:id="@+id/game_fragment"
+        android:name="com.example.showdown.ui.view.GameFragment"
+        tools:layout="@layout/fragment_game">
+        <action
+            android:id="@+id/game_fragment_to_main_fragment_action"
+            app:destination="@id/main_fragment"/>
+            <action
+            android:id="@+id/game_fragment_to_answer_fragment_action"
+            app:destination="@id/answer_fragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/answer_fragment"
+        android:name="com.example.showdown.ui.view.AnswerFragment"
+        tools:layout="@layout/fragment_answer">
+        <action
+            android:id="@+id/answer_fragment_to_main_fragment_action"
+            app:destination="@id/main_fragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/pokedex_fragment"
+        android:name="com.example.showdown.ui.view.PokedexFragment"
+        tools:layout="@layout/fragment_pokedex">
+        <action
+            android:id="@+id/pokedex_fragment_to_main_fragment_action"
+            app:destination="@id/main_fragment"/>
+        <action
+            android:id="@+id/pokedex_fragment_to_variant_fragment_action"
+            app:destination="@id/variant_fragment"/>
+        <argument
+            android:name="pokemonDexEntry"
+            app:argType="com.example.showdown.data.local.entities.Pokemon"
+            app:nullable="true"
+            android:defaultValue="@null" />
+<!--        <argument-->
+<!--            android:name="favPokemonDexEntry"-->
+<!--            app:argType="com.example.showdown.data.local.entities.FavoritePokemon"-->
+<!--            app:nullable="true"-->
+<!--            android:defaultValue="@null" />-->
+<!--        <argument-->
+<!--            android:name="variants"-->
+<!--            app:argType="com.example.showdown.data.local.entities.Variant[]" />-->
+
+        <!--        <argument-->
+<!--            android:name="dexEntry"-->
+<!--            app:argType="com.example.showdown.data.local.entities.Pokemon" />-->
+    </fragment>
+    <fragment
+        android:id="@+id/variant_fragment"
+        android:name="com.example.showdown.ui.view.VariantFragment"
+        tools:layout="@layout/fragment_variant">
+
+        <argument
+            android:name="variantPokemon"
+            app:argType="com.example.showdown.data.local.entities.Variant"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+
+    </fragment>
+</navigation>

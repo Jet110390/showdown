@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/variantHeaderTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/variantIv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/variantIv"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        app:layout_constraintTop_toBottomOf="@id/variantHeaderTv"
+        app:layout_constraintBottom_toTopOf="@id/variantAddToFavsBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:src="@mipmap/ic_launcher"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/variantStatsTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/variantAddToFavsBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <ImageButton
+        android:id="@+id/variantAddToFavsBtn"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:contentDescription="likeBtn"
+        app:srcCompat="@drawable/ic_unfavorite"
+        app:layout_constraintBottom_toTopOf="@id/variantStatsTv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/variantIv"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

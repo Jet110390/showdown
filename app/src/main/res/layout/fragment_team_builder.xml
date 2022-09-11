@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    //search bar that brings up poke name as they type
+    //they click image and give it 4 moves from its list of moves that also auto completes at they type
+    //6 inputs that represent the team and a submit button
+    //submit saves it to teams table
+</androidx.constraintlayout.widget.ConstraintLayout>

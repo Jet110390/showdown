@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Showdown</string>
+    <string name="slot1">slot1</string>
+    <string name="slot2">slot2</string>
+    <string name="slot3">slot3</string>
+    <string name="slot4">slot4</string>
+    <string name="Gen1"><a href="">Gen1</a></string>
+    <string name="Gen2"><a href="">Gen2</a></string>
+    <string name="Gen3"><a href="">Gen3</a></string>
+    <string name="Gen4"><a href="">Gen4</a></string>
+    <string name="Gen5"><a href="">Gen5</a></string>
+    <string name="Gen6"><a href="">Gen6</a></string>
+    <string name="Gen7"><a href="">Gen7</a></string>
+    <string name="Gen8"><a href="">Gen8</a></string>
+</resources>

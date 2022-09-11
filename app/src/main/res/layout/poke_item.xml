@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/idTv"
+            android:text="#"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/nameTv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/nameTv"
+            android:text="name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/idTv"
+            app:layout_constraintBottom_toTopOf="@id/pokeIv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/typeTv"
+            android:text="type1/type2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/nameTv"
+            app:layout_constraintBottom_toTopOf="@id/pokeIv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/pokeIv"
+            tools:src="@mipmap/ic_launcher"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/typeTv"
+            app:layout_constraintBottom_toTopOf="@id/addToFavsBtn"
+            />
+
+        <ImageButton
+            android:id="@+id/addToFavsBtn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:contentDescription="likeBtn"
+            app:srcCompat="@drawable/ic_unfavorite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pokeIv"
+             />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
