@@ -29,13 +29,13 @@ class FavPokemonAdapter(
     override fun onBindViewHolder(holder: FavPokemonViewHolder, position: Int) {
         holder.bind(favsList[position])
         holder.removeFav(favsList[position],favPokemonViewModel)
-        holder.itemView.setOnClickListener {
-            val pokemon= runBlocking { favPokemonViewModel.getPokedexEntry(favsList[position]!!) }
-            Log.d("clicked","${favsList[position]?.name}")
-//            val variantsList = pokemonInfoViewModel.getVars(pokemonList[position]!!)
-            val directions = FavsFragmentDirections.favsFragmentToPokedexFragmentAction(pokemon)
-            holder.itemView.findNavController().navigate(directions)
-        }
+//        holder.itemView.setOnClickListener {
+//            val pokemon= runBlocking { favPokemonViewModel.getPokedexEntry(favsList[position]) }
+//            Log.d("clicked","${favsList[position]?.name}")
+////            val variantsList = pokemonInfoViewModel.getVars(pokemonList[position]!!)
+//            val directions = FavsFragmentDirections.favsFragmentToPokedexFragmentAction(pokemon)
+//            holder.itemView.findNavController().navigate(directions)
+//        }
     }
 
     override fun getItemCount(): Int {
@@ -59,10 +59,10 @@ class FavPokemonAdapter(
 
                 if (favPokemon != null) {
                     infoTv.text = "${favPokemon.name}\n ${
-                            if (favPokemon?.type2 != "none") {
-                                "${favPokemon?.type1}/${favPokemon?.type2}" 
+                            if (favPokemon.type2 != "none") {
+                                "${favPokemon.type1}/${favPokemon.type2}" 
                             } else {
-                                "${favPokemon?.type1}"}
+                                "${favPokemon.type1}"}
                     }"
                 }
                 Glide.with(favPokeIv.context).load("${favPokemon?.image}").into(favPokeIv)

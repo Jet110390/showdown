@@ -1,23 +1,31 @@
 package com.example.showdown.ui.view
 
+import android.graphics.drawable.Drawable
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.annotation.Nullable
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.signature.ObjectKey
+import com.example.showdown.R
 import com.example.showdown.data.local.entities.Pokemon
 import com.example.showdown.databinding.FragmentMainBinding
 import com.example.showdown.ui.adapters.PokemonInfoAdapter
 import com.example.showdown.ui.viewmodel.PokemonInfoViewModel
 import com.example.showdown.utils.DataState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class MainFragment: Fragment() {
@@ -25,6 +33,8 @@ class MainFragment: Fragment() {
     private val binding: FragmentMainBinding get() = _binding!!
 
     private val infoViewModel: PokemonInfoViewModel by viewModels()
+
+    private lateinit var dexList: List<Pokemon>
 
     private val pokemonAdapter by lazy {
         PokemonInfoAdapter(infoViewModel)
@@ -83,6 +93,67 @@ class MainFragment: Fragment() {
                 }
 
             })
+            gen1.setOnClickListener {
+                infoViewModel.getGenOne().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                Log.d("frag shows", "${pokemonAdapter.officialArtworkUrl.value}")
+            }
+            gen2.setOnClickListener {
+                infoViewModel.getGenTwo().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+            }
+            gen3.setOnClickListener {
+                infoViewModel.getGenThree().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+            }
+            gen4.setOnClickListener {
+                infoViewModel.getGenFour().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+            }
+            gen5.setOnClickListener {
+                infoViewModel.getGenFive().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+            }
+            gen6.setOnClickListener {
+                infoViewModel.getGenSix().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+            }
+            gen7.setOnClickListener {
+                infoViewModel.getGenSeven().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+            }
+            gen8.setOnClickListener {
+                infoViewModel.getGenEight().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+            }
+            gen9.setOnClickListener {
+                infoViewModel.getGenNine().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+            }
+            allGens.setOnClickListener {
+                infoViewModel.allPokes().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+            }
+
+//            Glide.with(selectedPokeImageIv.context)
+//                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/254.png")
+//                .load("${pokemonAdapter.officialArtworkUrl.value}")
+//                .placeholder(R.drawable.ic_launcher_foreground)
+//                .signature(ObjectKey(System.currentTimeMillis().toString()))
+//                .listener(object : RequestListener<Drawable?> {
+//                    override fun onLoadFailed(
+//                        @Nullable e: GlideException?,
+//                        model: Any?,
+//                        target: com.bumptech.glide.request.target.Target<Drawable?>?,
+//                        isFirstResource: Boolean
+//                    ): Boolean {
+//                        // log exception
+//                        Log.e("TAG", "Error loading image", e)
+//                        return false // important to return false so the error placeholder can be placed
+//                    }
+//
+//                    override fun onResourceReady(
+//                        resource: Drawable?,
+//                        model: Any?,
+//                        target: com.bumptech.glide.request.target.Target<Drawable?>?,
+//                        dataSource: DataSource?,
+//                        isFirstResource: Boolean
+//                    ): Boolean {
+//                        return false
+//                    }
+//                })
+//                .into(selectedPokeImageIv)
+
 //            pokeSv.setOnSuggestionListener(object: SearchView.OnSuggestionListener,
 //                android.widget.SearchView.OnSuggestionListener{
 //                override fun onSuggestionSelect(position: Int): Boolean {

@@ -1,6 +1,7 @@
 package com.example.showdown.ui.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.showdown.R
 import com.example.showdown.databinding.FragmentFavsBinding
 import com.example.showdown.ui.adapters.FavPokemonAdapter
 import com.example.showdown.ui.adapters.PokemonInfoAdapter
@@ -47,7 +49,8 @@ class FavsFragment: Fragment() {
                 val direction= FavsFragmentDirections.favsFragmentToMainFragmentAction()
                 findNavController().navigate(direction)
             }
-            favsHeaderTv.text="${favsViewModel.favPokes.value?.size} Favorite Pokemon"
+            favsHeaderTv.text= resources.getString(R.string.favoritePokemonAmount,favsViewModel.favPokes.value?.size.toString())
+                Log.d("favs","${favsViewModel.favPokes.value?.size} Favorite Pokemon")
             favsViewModel.favPokes.observe(viewLifecycleOwner) {favPokes->
                 //add animations to recycler view
                 favsRv.apply {

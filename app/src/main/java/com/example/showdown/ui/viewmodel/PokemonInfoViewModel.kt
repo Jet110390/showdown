@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import retrofit2.http.Url
 import javax.inject.Inject
@@ -37,6 +38,31 @@ class PokemonInfoViewModel @Inject constructor(
     val favsList:MutableList<Pokemon> = mutableListOf()
     private var _fullPokedex: MutableLiveData<DataState<List<Pokemon>>> = MutableLiveData()
     val fullPokedex: LiveData<DataState<List<Pokemon>>> get() = _fullPokedex
+    private var _gen1: MutableLiveData<List<Pokemon>> = MutableLiveData()
+    val gen1: LiveData<List<Pokemon>> get() = _gen1
+    private var _gen2: MutableLiveData<List<Pokemon>> = MutableLiveData()
+    val gen2: LiveData<List<Pokemon>> get() = _gen2
+    private var _gen3: MutableLiveData<List<Pokemon>> = MutableLiveData()
+    val gen3: LiveData<List<Pokemon>> get() = _gen3
+    private var _gen4: MutableLiveData<List<Pokemon>> = MutableLiveData()
+    val gen4: LiveData<List<Pokemon>> get() = _gen4
+    private var _gen5: MutableLiveData<List<Pokemon>> = MutableLiveData()
+    val gen5: LiveData<List<Pokemon>> get() = _gen5
+    private var _gen6: MutableLiveData<List<Pokemon>> = MutableLiveData()
+    val gen6: LiveData<List<Pokemon>> get() = _gen6
+    private var _gen7: MutableLiveData<List<Pokemon>> = MutableLiveData()
+    val gen7: LiveData<List<Pokemon>> get() = _gen7
+
+    private var _gen8: MutableLiveData<List<Pokemon>> = MutableLiveData()
+    val gen8: LiveData<List<Pokemon>> get() = _gen8
+
+    private var _gen9: MutableLiveData<List<Pokemon>> = MutableLiveData()
+    val gen9: LiveData<List<Pokemon>> get() = _gen9
+
+    private var _allPokes: MutableLiveData<List<Pokemon>> = MutableLiveData()
+    val allPokes: LiveData<List<Pokemon>> get() = _allPokes
+    private var _officialImg: MutableLiveData<String> = MutableLiveData()
+    val officialImg: LiveData<String> get() = _officialImg
 
     init {
         getPokeInfo()
@@ -70,7 +96,24 @@ class PokemonInfoViewModel @Inject constructor(
             val pokedex=pokemonInfoRepository.getPokedex(pokeInfo,speciesInfo)
             _fullPokedex.postValue(pokedex)
         }
+//        viewModelScope.launch(Default) {
+//            var i = 1
+//            while (i < 906) {
+//                viewModelScope.launch(IO) {
+//                    val response=pokemonInfoRepository.getPokeInfoViaDexNumber(i.toString())
+//                    response?.let { it ->
+//                        pokeInfo.add(it)
+//                    }
+//                }
+//                i++
+//            }
+//            speciesInfo = pokemonInfoRepository.getSpecies(pokeInfo)
+//            val pokedex = pokemonInfoRepository.getPokedex(pokeInfo,speciesInfo)
+//            _fullPokedex.postValue(pokedex)
+//        }
     }
+
+
 //    val fullPokedex = pokemonInfoRepository.getPokedex( pokeInfo,speciesInfo).asLiveData(viewModelScope.coroutineContext)
 
     suspend fun addToFavs(pokemon: Pokemon){
@@ -78,7 +121,64 @@ class PokemonInfoViewModel @Inject constructor(
         Log.d("favs","$favsList")
         pokemonInfoRepository.addToFavs(pokemon)
     }
+    fun getGenOne(): LiveData<List<Pokemon>> {
+        viewModelScope.launch(Default){
+           val response = pokemonInfoRepository.getGenerationOne()
+                _gen1.postValue(response)
+        }
+        return gen1
+    }
+    fun getGenTwo(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
+        val response = pokemonInfoRepository.getGenerationTwo()
+        _gen2.postValue(response)
+    }
+        return gen2}
+    fun getGenThree(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
+        val response = pokemonInfoRepository.getGenerationThree()
+    _gen3.postValue(response)
+        }
+        return gen3}
+    fun getGenFour(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
+        val response = pokemonInfoRepository.getGenerationFour()
+    _gen4.postValue(response)
+        }
+        return gen4}
+    fun getGenFive(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
+        val response = pokemonInfoRepository.getGenerationFive()
+    _gen5.postValue(response)
+        }
+        return gen5}
+    fun getGenSix(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
+        val response = pokemonInfoRepository.getGenerationSix()
+    _gen6.postValue(response)
+        }
+        return gen6}
+    fun getGenSeven(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
+        val response = pokemonInfoRepository.getGenerationSeven()
+    _gen7.postValue(response)
+        }
+        return gen7}
+    fun getGenEight(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
+        val response = pokemonInfoRepository.getGenerationEight()
+    _gen8.postValue(response)
+        }
+        return gen8}
 
-//
-
+    fun getGenNine(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
+        val response = pokemonInfoRepository.getGenerationNine()
+    _gen9.postValue(response)
+        }
+        return gen9}
+    fun allPokes(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
+        val response = pokemonInfoRepository.fullDexList()
+        _allPokes.postValue(response)
+    }
+        return allPokes}
+    fun getOfficialImage(id: Int): LiveData<String>{
+        viewModelScope.launch(Default){
+            val response = pokemonInfoRepository.getOfficialImg(id)
+                _officialImg.postValue(response)
+    }
+        return officialImg
+    }
 }

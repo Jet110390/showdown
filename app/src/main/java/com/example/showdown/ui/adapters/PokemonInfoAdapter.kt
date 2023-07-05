@@ -2,28 +2,22 @@ package com.example.showdown.ui.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.distinctUntilChanged
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.showdown.data.local.entities.FavoritePokemon
 import com.example.showdown.data.local.entities.Pokemon
-import com.example.showdown.data.local.entities.Variant
 import com.example.showdown.databinding.PokeItemBinding
 import com.example.showdown.ui.view.MainFragmentDirections
 import com.example.showdown.ui.viewmodel.PokemonInfoViewModel
+import kotlinx.coroutines.flow.flowOf
 
 import kotlinx.coroutines.runBlocking
-import javax.inject.Inject
-import kotlin.reflect.KFunction1
 
 class PokemonInfoAdapter(
     private val pokemonInfoViewModel: PokemonInfoViewModel
@@ -31,11 +25,12 @@ class PokemonInfoAdapter(
     private var pokemonList = mutableListOf<Pokemon?>()
     var pokemonListCopy = mutableListOf<Pokemon?>()
     var pokemonListFiltered = mutableListOf<Pokemon?>()
+    private var _officialArtworkUrl: MutableLiveData<String> = MutableLiveData()
+    val officialArtworkUrl: LiveData<String> get() = _officialArtworkUrl
 //    private lateinit var pokemonInfoViewModel: PokemonInfoViewModel
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = PokeItemBinding.inflate(inflater, parent, false)
+        val binding = PokeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PokemonViewHolder(binding).listen { pos, type ->
         }
     }
@@ -44,7 +39,11 @@ class PokemonInfoAdapter(
         holder.addFavorite(pokemonList[position]!!,pokemonInfoViewModel)
         holder.bind(pokemonList[position])
         holder.itemView.setOnClickListener {
-            Log.d("clicked","${pokemonList[position]?.name}")
+            _officialArtworkUrl.postValue(holder.getOfficialImage(pokemonList[position]!!, pokemonInfoViewModel).value)
+            Log.d("clicked","name: ${pokemonList[position]?.name} url: ${officialArtworkUrl.value}")
+
+
+//            Log.d("should show", "${officialArtworkUrl.value}")
 //            val variantsList = pokemonInfoViewModel.getVars(pokemonList[position]!!)
             val directions = MainFragmentDirections.mainFragmentToPokedexFragmentAction(pokemonList[position]!!)
             holder.itemView.findNavController().navigate(directions)
@@ -56,6 +55,14 @@ class PokemonInfoAdapter(
     }
 
     fun submitList(pokes: List<Pokemon>) {
+        pokemonList.clear()
+        pokemonList.addAll(pokes)
+        pokemonListCopy = pokemonList
+//        pokemonListFiltered
+        notifyDataSetChanged()
+    }
+
+    fun updateList(pokes: List<Pokemon>) {
         pokemonList.clear()
         pokemonList.addAll(pokes)
         pokemonListCopy = pokemonList
@@ -97,10 +104,10 @@ class PokemonInfoAdapter(
                     results.values as MutableList<Pokemon?>
 
                 }
-                if (charString?.length > 0) {
-                    pokemonList = pokemonListFiltered
+                pokemonList = if (charString.isNotEmpty()) {
+                    pokemonListFiltered
                 } else {
-                    pokemonList = pokemonListCopy
+                    pokemonListCopy
                 }
                 notifyDataSetChanged()
             }
@@ -109,7 +116,7 @@ class PokemonInfoAdapter(
 
     class PokemonViewHolder (private val binding: PokeItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
+//        lateinit var viewModel: PokemonInfoViewModel
         fun addFavorite(poke: Pokemon,viewModel: PokemonInfoViewModel){
 //            if (binding.addToFavsBtn.isVisible)
             binding.addToFavsBtn.setOnClickListener {
@@ -117,11 +124,14 @@ class PokemonInfoAdapter(
                     viewModel.addToFavs(poke) }
             }
         }
-        fun bind(pokemon: Pokemon?) {
+        fun getOfficialImage(poke: Pokemon, viewModel: PokemonInfoViewModel): LiveData<String> {
+            return viewModel.getOfficialImage(poke.id)
+        }
 
-            with(binding) {
+
+        fun bind(pokemon: Pokemon?) = with(binding) {
+
                 if (pokemon != null) {
-
                     idTv.text = "#${pokemon.id}"
                     nameTv.text = " ${pokemon.name.upper()}"
                     typeTv.text = "${
@@ -134,7 +144,6 @@ class PokemonInfoAdapter(
 
                     }
                     Glide.with(pokeIv.context).load("${pokemon?.image}").into(pokeIv)
-            }
         }
     }
 }
