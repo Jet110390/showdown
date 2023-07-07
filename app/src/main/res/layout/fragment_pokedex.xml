@@ -5,6 +5,21 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <WebView
+        android:id="@+id/bulbapediaWv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/dexSv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/pokedexHeaderTv"
         android:layout_width="wrap_content"
@@ -34,8 +49,18 @@
         app:layout_constraintTop_toBottomOf="@id/pokedexIv"
         app:layout_constraintBottom_toTopOf="@id/variantRv"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/pokedexDescriptionTv"/>
+        app:layout_constraintEnd_toStartOf="@id/moreInfoTv"/>
 
+    <TextView
+        android:id="@+id/moreInfoTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="More Info"
+        app:layout_constraintStart_toEndOf="@id/likeBtn"
+        app:layout_constraintEnd_toStartOf="@id/pokedexDescriptionTv"
+        app:layout_constraintTop_toBottomOf="@id/pokedexIv"
+        app:layout_constraintBottom_toTopOf="@id/variantRv"
+        />
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/pokedexStatsTv"
         android:layout_width="wrap_content"
@@ -78,4 +103,6 @@
         android:orientation="horizontal"
         tools:listitem="@layout/variant_item"
         />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

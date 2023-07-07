@@ -1,0 +1,12 @@
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shimmerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:shimmer_demo_layout="@layout/item_shimmer"
+    app:shimmer_repeat_delay="1000">
+
+    <!-- Placeholder layout for shimmer items -->
+    <include layout="@layout/poke_item_skeleton" />
+
+</com.facebook.shimmer.ShimmerFrameLayout>
