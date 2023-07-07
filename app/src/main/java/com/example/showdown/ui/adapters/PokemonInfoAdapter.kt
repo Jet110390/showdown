@@ -40,7 +40,7 @@ class PokemonInfoAdapter(
         holder.bind(pokemonList[position])
         holder.itemView.setOnClickListener {
             _officialArtworkUrl.postValue(holder.getOfficialImage(pokemonList[position]!!, pokemonInfoViewModel).value)
-            Log.d("clicked","name: ${pokemonList[position]?.name} url: ${officialArtworkUrl.value}")
+            Log.d("clicked","name: ${pokemonList[position]?.name}")
 
 
 //            Log.d("should show", "${officialArtworkUrl.value}")

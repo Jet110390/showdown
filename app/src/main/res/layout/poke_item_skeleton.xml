@@ -1,60 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="250dp"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools">
-<com.google.android.material.textview.MaterialTextView
-    android:id="@+id/idSkeletonTv"
-    android:text="#"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toTopOf="@id/nameTv"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintVertical_chainStyle="packed"
-    />
-<com.google.android.material.textview.MaterialTextView
-    android:id="@+id/nameSkeletonTv"
-    android:text="name"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toBottomOf="@id/idSkeletonTv"
-    app:layout_constraintBottom_toTopOf="@id/pokeIv"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"/>
-<com.google.android.material.textview.MaterialTextView
-    android:id="@+id/typeSkeletonTv"
-    android:text="type1/type2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toBottomOf="@id/nameSkeletonTv"
-    app:layout_constraintBottom_toTopOf="@id/pokeIv"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"/>
-<View
-    android:id="@+id/pokeSkeletonIv"
-    tools:src="@mipmap/ic_launcher"
-    android:layout_width="125dp"
-    android:layout_height="125dp"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/typeSkeletonTv"
-    app:layout_constraintBottom_toTopOf="@id/addToFavsSkeletonBtn"
-    />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:id="@+id/pokeItemCl">
 
-<ImageButton
-    android:id="@+id/addToFavsSkeletonBtn"
-    android:layout_width="25dp"
-    android:layout_height="25dp"
-    android:contentDescription="likeBtn"
-    app:srcCompat="@drawable/ic_unfavorite"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/pokeSkeletonIv"
-    />
+
+        <View
+            android:id="@+id/idSkeletonTv"
+            android:layout_width="15dp"
+            android:layout_height="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/shimmerColor"
+            app:layout_constraintBottom_toTopOf="@id/nameSkeletonTv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <View
+            android:id="@+id/nameSkeletonTv"
+            android:layout_width="60dp"
+            android:layout_height="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/shimmerColor"
+            android:text="name"
+            app:layout_constraintBottom_toTopOf="@id/typeSkeletonTv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/idSkeletonTv" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/typeSkeletonTv"
+            android:layout_width="40dp"
+            android:layout_height="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/shimmerColor"
+            app:layout_constraintBottom_toTopOf="@id/pokeSkeletonIv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nameSkeletonTv" />
+
+        <View
+            android:id="@+id/pokeSkeletonIv"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="30dp"
+            android:background="@color/shimmerColor"
+            app:layout_constraintBottom_toTopOf="@id/addToFavsSkeletonBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/typeSkeletonTv" />
+
+        <View
+            android:id="@+id/addToFavsSkeletonBtn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@color/shimmerColor"
+            android:contentDescription="likeBtn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pokeSkeletonIv" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
