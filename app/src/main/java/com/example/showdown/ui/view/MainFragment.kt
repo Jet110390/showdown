@@ -1,6 +1,8 @@
 package com.example.showdown.ui.view
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +51,7 @@ class MainFragment: Fragment() {
 //    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        startShimmer()
         with(binding) {
 
 //            pokemonAdapter.setOnItemClickListener(object : PokemonInfoAdapter.onItemClickListener{
@@ -87,7 +90,11 @@ class MainFragment: Fragment() {
 
             })
             gen1.setOnClickListener {
-                infoViewModel.getGenOne().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                startShimmer()
+                infoViewModel.getGenOne().value?.let { it1 ->
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        stopShimmer()
+                    pokemonAdapter.updateList(it1)}, 3000) }
                 Log.d("frag shows", "${pokemonAdapter.officialArtworkUrl.value}")
             }
             gen2.setOnClickListener {
@@ -162,14 +169,19 @@ class MainFragment: Fragment() {
 
             infoViewModel.fullPokedex.observe(viewLifecycleOwner) {
                 //add animations to recycler view
-                pokeRv.apply {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    // Stop shimmer effect
+                    stopShimmer()
+                    pokeRv.apply {
 //                    this.adapter?.notifyDataSetChanged()
-                    infoViewModel
-                    adapter = pokemonAdapter
-                    layoutManager =
-                        GridLayoutManager(requireContext(), 3, RecyclerView.VERTICAL, false)
+                        infoViewModel
+                        adapter = pokemonAdapter
+                        layoutManager =
+                            GridLayoutManager(requireContext(), 3, RecyclerView.VERTICAL, false)
+
 //                        LinearLayoutManager(requireContext())
-                }
+                    }
+                }, 3000)
             }
             infoViewModel.fullPokedex.observe(viewLifecycleOwner) { state ->
                 updateUi(state is DataState.Loading)
@@ -187,7 +199,15 @@ class MainFragment: Fragment() {
             }
         }
     }
+    private fun startShimmer() {
+        binding.shimmerFrameLayout.startShimmer()
+        binding.shimmerFrameLayout.visibility = View.VISIBLE
+    }
 
+    private fun stopShimmer() {
+        binding.shimmerFrameLayout.stopShimmer()
+        binding.shimmerFrameLayout.visibility = View.GONE
+    }
 
     private fun updateUi(isLoading: Boolean) {
         binding.progressBar.isVisible = isLoading

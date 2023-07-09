@@ -1,168 +1,625 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/favsBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="favs"
-        app:layout_constraintBottom_toTopOf="@id/allGens"
-        app:layout_constraintEnd_toStartOf="@id/teamBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/teamBtn"
-        android:text="teams"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/allGens"
-        app:layout_constraintStart_toEndOf="@id/favsBtn"
-        app:layout_constraintEnd_toStartOf="@id/WTPBtn"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/WTPBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ID Game"
-        app:layout_constraintBottom_toTopOf="@id/allGens"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/teamBtn"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
-
-    <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/allGens"
-            android:text="@string/AllGens"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/teamBtn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/gen1"/>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/gen1"
-        android:text="@string/Gen1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/allGens"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/gen2"
-        app:layout_constraintBottom_toTopOf="@id/gen5"/>
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/gen2"
-        android:text="@string/Gen2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/allGens"
-        app:layout_constraintStart_toEndOf="@id/gen1"
-        app:layout_constraintEnd_toStartOf="@id/gen3"
-        app:layout_constraintBottom_toTopOf="@id/gen6"/>
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/gen3"
-        android:text="@string/Gen3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/allGens"
-        app:layout_constraintStart_toEndOf="@id/gen2"
-        app:layout_constraintEnd_toStartOf="@id/gen4"
-        app:layout_constraintBottom_toTopOf="@id/gen7"/>
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/gen4"
-        android:text="@string/Gen4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/allGens"
-        app:layout_constraintStart_toEndOf="@id/gen3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/gen8"/>
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/gen5"
-        android:text="@string/Gen5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/gen1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/gen6"
-        app:layout_constraintBottom_toTopOf="@id/gen9"/>
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/gen6"
-        android:text="@string/Gen6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/gen2"
-        app:layout_constraintStart_toEndOf="@id/gen5"
-        app:layout_constraintEnd_toStartOf="@id/gen7"
-        app:layout_constraintBottom_toTopOf="@id/gen9"/>
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/gen7"
-        android:text="@string/Gen7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/gen3"
-        app:layout_constraintStart_toEndOf="@id/gen6"
-        app:layout_constraintEnd_toStartOf="@id/gen8"
-        app:layout_constraintBottom_toTopOf="@id/gen9"/>
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/gen8"
-        android:text="@string/Gen8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/gen4"
-        app:layout_constraintStart_toEndOf="@id/gen7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/gen9"/>
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/gen9"
-        android:text="@string/Gen9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/gen5"
-        app:layout_constraintStart_toEndOf="@id/gen6"
-        app:layout_constraintEnd_toStartOf="@id/gen7"
-        app:layout_constraintBottom_toTopOf="@id/pokeSv"/>
-    <SearchView
-        android:id="@+id/pokeSv"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/gen9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/pokeRv"
-        android:layout_margin="16dp"
-        android:background="@drawable/custom_background"
-        android:iconifiedByDefault="false"
-        android:queryHint="search for pokemon"
-        android:queryBackground="@android:color/transparent"
-        app:actionViewClass="android.widget.SearchView"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/pokeRv"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_percent=".55"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pokeSv"
-        tools:listitem="@layout/poke_item"
-        />
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/favsBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="favs"
+                app:layout_constraintBottom_toTopOf="@id/allGens"
+                app:layout_constraintEnd_toStartOf="@id/teamBtn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.3" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/teamBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="teams"
+                app:layout_constraintBottom_toTopOf="@id/allGens"
+                app:layout_constraintEnd_toStartOf="@id/WTPBtn"
+                app:layout_constraintStart_toEndOf="@id/favsBtn"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/WTPBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID Game"
+                app:layout_constraintBottom_toTopOf="@id/allGens"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/teamBtn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.3" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/allGens"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/AllGens"
+                app:layout_constraintBottom_toTopOf="@id/gen1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/teamBtn" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/gen1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Gen1"
+                app:layout_constraintBottom_toTopOf="@id/gen5"
+                app:layout_constraintEnd_toStartOf="@id/gen2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/allGens" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/gen2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Gen2"
+                app:layout_constraintBottom_toTopOf="@id/gen6"
+                app:layout_constraintEnd_toStartOf="@id/gen3"
+                app:layout_constraintStart_toEndOf="@id/gen1"
+                app:layout_constraintTop_toBottomOf="@id/allGens" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/gen3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Gen3"
+                app:layout_constraintBottom_toTopOf="@id/gen7"
+                app:layout_constraintEnd_toStartOf="@id/gen4"
+                app:layout_constraintStart_toEndOf="@id/gen2"
+                app:layout_constraintTop_toBottomOf="@id/allGens" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/gen4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Gen4"
+                app:layout_constraintBottom_toTopOf="@id/gen8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/gen3"
+                app:layout_constraintTop_toBottomOf="@id/allGens" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/gen5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Gen5"
+                app:layout_constraintBottom_toTopOf="@id/gen9"
+                app:layout_constraintEnd_toStartOf="@id/gen6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/gen1" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/gen6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Gen6"
+                app:layout_constraintBottom_toTopOf="@id/gen9"
+                app:layout_constraintEnd_toStartOf="@id/gen7"
+                app:layout_constraintStart_toEndOf="@id/gen5"
+                app:layout_constraintTop_toBottomOf="@id/gen2" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/gen7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Gen7"
+                app:layout_constraintBottom_toTopOf="@id/gen9"
+                app:layout_constraintEnd_toStartOf="@id/gen8"
+                app:layout_constraintStart_toEndOf="@id/gen6"
+                app:layout_constraintTop_toBottomOf="@id/gen3" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/gen8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Gen8"
+                app:layout_constraintBottom_toTopOf="@id/gen9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/gen7"
+                app:layout_constraintTop_toBottomOf="@id/gen4" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/gen9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Gen9"
+                app:layout_constraintBottom_toTopOf="@id/pokeSv"
+                app:layout_constraintEnd_toStartOf="@id/gen7"
+                app:layout_constraintStart_toEndOf="@id/gen6"
+                app:layout_constraintTop_toBottomOf="@id/gen5" />
+
+            <SearchView
+                android:id="@+id/pokeSv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/custom_background"
+                android:iconifiedByDefault="false"
+                android:queryBackground="@android:color/transparent"
+                android:queryHint="search for pokemon"
+                app:actionViewClass="android.widget.SearchView"
+                app:layout_constraintBottom_toTopOf="@id/pokeRv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/gen9" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/pokeRv"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent=".75"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pokeSv"
+                tools:listitem="@layout/poke_item" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/shimmerFrameLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent=".75"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pokeSv"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <!-- Placeholder layout for shimmer items -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/item1"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        app:layout_constraintBottom_toTopOf="@id/item4"
+                        app:layout_constraintEnd_toStartOf="@id/item2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp">
+
+                        <View
+                            android:id="@+id/idSkeletonTv1"
+                            android:layout_width="15dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/nameSkeletonTv1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed" />
+
+                        <View
+                            android:id="@+id/nameSkeletonTv1"
+                            android:layout_width="60dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/shimmerColor"
+                            android:text="name"
+                            app:layout_constraintBottom_toTopOf="@id/typeSkeletonTv1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/idSkeletonTv1" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/typeSkeletonTv1"
+                            android:layout_width="70dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/pokeSkeletonIv1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/nameSkeletonTv1" />
+
+                        <View
+                            android:id="@+id/pokeSkeletonIv1"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_marginBottom="30dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/addToFavsSkeletonBtn1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/typeSkeletonTv1" />
+
+                        <View
+                            android:id="@+id/addToFavsSkeletonBtn1"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:background="@color/shimmerColor"
+                            android:contentDescription="likeBtn"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/pokeSkeletonIv1" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/item2"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        app:layout_constraintBottom_toTopOf="@id/item5"
+                        app:layout_constraintEnd_toStartOf="@id/item3"
+                        app:layout_constraintStart_toEndOf="@id/item1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginEnd="10dp">
+
+                        <View
+                            android:id="@+id/idSkeletonTv2"
+                            android:layout_width="15dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/nameSkeletonTv2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed" />
+
+                        <View
+                            android:id="@+id/nameSkeletonTv2"
+                            android:layout_width="60dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/shimmerColor"
+                            android:text="name"
+                            app:layout_constraintBottom_toTopOf="@id/typeSkeletonTv2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/idSkeletonTv2" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/typeSkeletonTv2"
+                            android:layout_width="70dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/pokeSkeletonIv2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/nameSkeletonTv2" />
+
+                        <View
+                            android:id="@+id/pokeSkeletonIv2"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_marginBottom="30dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/addToFavsSkeletonBtn2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/typeSkeletonTv2" />
+
+                        <View
+                            android:id="@+id/addToFavsSkeletonBtn2"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:background="@color/shimmerColor"
+                            android:contentDescription="likeBtn"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/pokeSkeletonIv2" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/item3"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        app:layout_constraintBottom_toTopOf="@id/item6"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/item2"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginEnd="10dp">
+
+                        <View
+                            android:id="@+id/idSkeletonTv3"
+                            android:layout_width="15dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/nameSkeletonTv3"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed" />
+
+                        <View
+                            android:id="@+id/nameSkeletonTv3"
+                            android:layout_width="60dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/shimmerColor"
+                            android:text="name"
+                            app:layout_constraintBottom_toTopOf="@id/typeSkeletonTv3"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/idSkeletonTv3" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/typeSkeletonTv3"
+                            android:layout_width="70dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/pokeSkeletonIv3"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/nameSkeletonTv3" />
+
+                        <View
+                            android:id="@+id/pokeSkeletonIv3"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_marginBottom="30dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/addToFavsSkeletonBtn3"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/typeSkeletonTv3" />
+
+                        <View
+                            android:id="@+id/addToFavsSkeletonBtn3"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:background="@color/shimmerColor"
+                            android:contentDescription="likeBtn"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/pokeSkeletonIv3" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/item4"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/item5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/item1"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        >
+
+                        <View
+                            android:id="@+id/idSkeletonTv4"
+                            android:layout_width="15dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/nameSkeletonTv4"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed" />
+
+                        <View
+                            android:id="@+id/nameSkeletonTv4"
+                            android:layout_width="60dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/shimmerColor"
+                            android:text="name"
+                            app:layout_constraintBottom_toTopOf="@id/typeSkeletonTv4"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/idSkeletonTv4" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/typeSkeletonTv4"
+                            android:layout_width="70dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/pokeSkeletonIv4"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/nameSkeletonTv4" />
+
+                        <View
+                            android:id="@+id/pokeSkeletonIv4"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_marginBottom="30dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/addToFavsSkeletonBtn4"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/typeSkeletonTv4" />
+
+                        <View
+                            android:id="@+id/addToFavsSkeletonBtn4"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:background="@color/shimmerColor"
+                            android:contentDescription="likeBtn"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/pokeSkeletonIv4" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/item5"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/item6"
+                        app:layout_constraintStart_toEndOf="@id/item4"
+                        app:layout_constraintTop_toBottomOf="@id/item2"
+                        android:layout_marginEnd="10dp">
+
+                        <View
+                            android:id="@+id/idSkeletonTv5"
+                            android:layout_width="15dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/nameSkeletonTv5"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed" />
+
+                        <View
+                            android:id="@+id/nameSkeletonTv5"
+                            android:layout_width="60dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/shimmerColor"
+                            android:text="name"
+                            app:layout_constraintBottom_toTopOf="@id/typeSkeletonTv5"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/idSkeletonTv5" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/typeSkeletonTv5"
+                            android:layout_width="70dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/pokeSkeletonIv5"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/nameSkeletonTv5" />
+
+                        <View
+                            android:id="@+id/pokeSkeletonIv5"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_marginBottom="30dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/addToFavsSkeletonBtn5"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/typeSkeletonTv5" />
+
+                        <View
+                            android:id="@+id/addToFavsSkeletonBtn5"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:background="@color/shimmerColor"
+                            android:contentDescription="likeBtn"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/pokeSkeletonIv5" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/item6"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/item5"
+                        app:layout_constraintTop_toBottomOf="@id/item3"
+                        android:layout_marginEnd="10dp">
+
+                        <View
+                            android:id="@+id/idSkeletonTv6"
+                            android:layout_width="15dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/nameSkeletonTv6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed" />
+
+                        <View
+                            android:id="@+id/nameSkeletonTv6"
+                            android:layout_width="60dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/shimmerColor"
+                            android:text="name"
+                            app:layout_constraintBottom_toTopOf="@id/typeSkeletonTv6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/idSkeletonTv6" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/typeSkeletonTv6"
+                            android:layout_width="70dp"
+                            android:layout_height="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/pokeSkeletonIv6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/nameSkeletonTv6" />
+
+                        <View
+                            android:id="@+id/pokeSkeletonIv6"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_marginBottom="30dp"
+                            android:background="@color/shimmerColor"
+                            app:layout_constraintBottom_toTopOf="@id/addToFavsSkeletonBtn6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/typeSkeletonTv6" />
+
+                        <View
+                            android:id="@+id/addToFavsSkeletonBtn6"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:background="@color/shimmerColor"
+                            android:contentDescription="likeBtn"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/pokeSkeletonIv6" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

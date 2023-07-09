@@ -1,11 +1,48 @@
 <com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/shimmerLayout"
+    android:id="@+id/shimmerFrameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <!-- Placeholder layout for shimmer items -->
-    <include layout="@layout/poke_item_skeleton" />
-
+    <include layout="@layout/poke_item_skeleton"
+        android:id="@+id/item1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/item2"
+        app:layout_constraintBottom_toTopOf="@id/item4"/>
+    <include layout="@layout/poke_item_skeleton"
+        android:id="@+id/item2"
+        app:layout_constraintStart_toEndOf="@id/item1"
+        app:layout_constraintEnd_toStartOf="@id/item3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/item5"/>
+    <include layout="@layout/poke_item_skeleton"
+        android:id="@+id/item3"
+        app:layout_constraintStart_toEndOf="@id/item2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/item6"/>
+    <include layout="@layout/poke_item_skeleton"
+        android:id="@+id/item4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/item5"/>
+    <include layout="@layout/poke_item_skeleton"
+        android:id="@+id/item5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item2"
+        app:layout_constraintStart_toEndOf="@id/item4"
+        app:layout_constraintEnd_toStartOf="@id/item6"/>
+    <include layout="@layout/poke_item_skeleton"
+        android:id="@+id/item6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item3"
+        app:layout_constraintStart_toEndOf="@id/item5"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
 </com.facebook.shimmer.ShimmerFrameLayout>

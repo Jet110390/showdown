@@ -33,7 +33,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/typeSkeletonTv"
-            android:layout_width="40dp"
+            android:layout_width="70dp"
             android:layout_height="10dp"
             android:layout_marginBottom="20dp"
             android:background="@color/shimmerColor"
@@ -55,8 +55,8 @@
 
         <View
             android:id="@+id/addToFavsSkeletonBtn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:background="@color/shimmerColor"
             android:contentDescription="likeBtn"
             app:layout_constraintBottom_toBottomOf="parent"
