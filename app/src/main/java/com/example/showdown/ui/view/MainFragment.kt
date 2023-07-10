@@ -1,6 +1,8 @@
 package com.example.showdown.ui.view
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +51,7 @@ class MainFragment: Fragment() {
 //    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        startShimmer()
         with(binding) {
 
 //            pokemonAdapter.setOnItemClickListener(object : PokemonInfoAdapter.onItemClickListener{
@@ -87,35 +90,35 @@ class MainFragment: Fragment() {
 
             })
             gen1.setOnClickListener {
-                infoViewModel.getGenOne().value?.let { it1 -> pokemonAdapter.updateList(it1) }
-                Log.d("frag shows", "${pokemonAdapter.officialArtworkUrl.value}")
+                infoViewModel.getGenOne().value?.let { firstGen ->
+                    pokemonAdapter.updateList(firstGen) }
             }
             gen2.setOnClickListener {
-                infoViewModel.getGenTwo().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenTwo().value?.let { secondGen -> pokemonAdapter.updateList(secondGen) }
             }
             gen3.setOnClickListener {
-                infoViewModel.getGenThree().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenThree().value?.let { thirdGen -> pokemonAdapter.updateList(thirdGen) }
             }
             gen4.setOnClickListener {
-                infoViewModel.getGenFour().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenFour().value?.let { fourthGen -> pokemonAdapter.updateList(fourthGen) }
             }
             gen5.setOnClickListener {
-                infoViewModel.getGenFive().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenFive().value?.let { fifthGen -> pokemonAdapter.updateList(fifthGen) }
             }
             gen6.setOnClickListener {
-                infoViewModel.getGenSix().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenSix().value?.let { sixthGen -> pokemonAdapter.updateList(sixthGen) }
             }
             gen7.setOnClickListener {
-                infoViewModel.getGenSeven().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenSeven().value?.let { seventhGen -> pokemonAdapter.updateList(seventhGen) }
             }
             gen8.setOnClickListener {
-                infoViewModel.getGenEight().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenEight().value?.let { eighthGen -> pokemonAdapter.updateList(eighthGen) }
             }
             gen9.setOnClickListener {
-                infoViewModel.getGenNine().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenNine().value?.let { ninthGen -> pokemonAdapter.updateList(ninthGen) }
             }
             allGens.setOnClickListener {
-                infoViewModel.allPokes().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.allPokes().value?.let { allGens -> pokemonAdapter.updateList(allGens) }
             }
 
 //            Glide.with(selectedPokeImageIv.context)
@@ -162,14 +165,19 @@ class MainFragment: Fragment() {
 
             infoViewModel.fullPokedex.observe(viewLifecycleOwner) {
                 //add animations to recycler view
-                pokeRv.apply {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    // Stop shimmer effect
+                    stopShimmer()
+                    pokeRv.apply {
 //                    this.adapter?.notifyDataSetChanged()
-                    infoViewModel
-                    adapter = pokemonAdapter
-                    layoutManager =
-                        GridLayoutManager(requireContext(), 3, RecyclerView.VERTICAL, false)
+                        infoViewModel
+                        adapter = pokemonAdapter
+                        layoutManager =
+                            GridLayoutManager(requireContext(), 3, RecyclerView.VERTICAL, false)
+
 //                        LinearLayoutManager(requireContext())
-                }
+                    }
+                }, 3000)
             }
             infoViewModel.fullPokedex.observe(viewLifecycleOwner) { state ->
                 updateUi(state is DataState.Loading)
@@ -187,7 +195,15 @@ class MainFragment: Fragment() {
             }
         }
     }
+    private fun startShimmer() {
+        binding.shimmerFrameLayout.startShimmer()
+        binding.shimmerFrameLayout.visibility = View.VISIBLE
+    }
 
+    private fun stopShimmer() {
+        binding.shimmerFrameLayout.stopShimmer()
+        binding.shimmerFrameLayout.visibility = View.GONE
+    }
 
     private fun updateUi(isLoading: Boolean) {
         binding.progressBar.isVisible = isLoading

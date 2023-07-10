@@ -123,8 +123,8 @@ class PokemonInfoViewModel @Inject constructor(
     }
     fun getGenOne(): LiveData<List<Pokemon>> {
         viewModelScope.launch(Default){
-           val response = pokemonInfoRepository.getGenerationOne()
-                _gen1.postValue(response)
+            val response = pokemonInfoRepository.getGenerationOne()
+            _gen1.postValue(response)
         }
         return gen1
     }
@@ -135,38 +135,38 @@ class PokemonInfoViewModel @Inject constructor(
         return gen2}
     fun getGenThree(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
         val response = pokemonInfoRepository.getGenerationThree()
-    _gen3.postValue(response)
+        _gen3.postValue(response)
         }
         return gen3}
     fun getGenFour(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
         val response = pokemonInfoRepository.getGenerationFour()
-    _gen4.postValue(response)
+        _gen4.postValue(response)
         }
         return gen4}
     fun getGenFive(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
         val response = pokemonInfoRepository.getGenerationFive()
-    _gen5.postValue(response)
+        _gen5.postValue(response)
         }
         return gen5}
     fun getGenSix(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
         val response = pokemonInfoRepository.getGenerationSix()
-    _gen6.postValue(response)
+        _gen6.postValue(response)
         }
         return gen6}
     fun getGenSeven(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
         val response = pokemonInfoRepository.getGenerationSeven()
-    _gen7.postValue(response)
+        _gen7.postValue(response)
         }
         return gen7}
     fun getGenEight(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
         val response = pokemonInfoRepository.getGenerationEight()
-    _gen8.postValue(response)
+        _gen8.postValue(response)
         }
         return gen8}
 
     fun getGenNine(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
         val response = pokemonInfoRepository.getGenerationNine()
-    _gen9.postValue(response)
+        _gen9.postValue(response)
         }
         return gen9}
     fun allPokes(): LiveData<List<Pokemon>> {viewModelScope.launch(Default){
@@ -177,7 +177,7 @@ class PokemonInfoViewModel @Inject constructor(
     fun getOfficialImage(id: Int): LiveData<String>{
         viewModelScope.launch(Default){
             val response = pokemonInfoRepository.getOfficialImg(id)
-                _officialImg.postValue(response)
+            _officialImg.postValue(response)
     }
         return officialImg
     }
