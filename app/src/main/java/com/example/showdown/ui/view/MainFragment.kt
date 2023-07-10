@@ -90,39 +90,35 @@ class MainFragment: Fragment() {
 
             })
             gen1.setOnClickListener {
-                startShimmer()
-                infoViewModel.getGenOne().value?.let { it1 ->
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        stopShimmer()
-                    pokemonAdapter.updateList(it1)}, 3000) }
-                Log.d("frag shows", "${pokemonAdapter.officialArtworkUrl.value}")
+                infoViewModel.getGenOne().value?.let { firstGen ->
+                    pokemonAdapter.updateList(firstGen) }
             }
             gen2.setOnClickListener {
-                infoViewModel.getGenTwo().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenTwo().value?.let { secondGen -> pokemonAdapter.updateList(secondGen) }
             }
             gen3.setOnClickListener {
-                infoViewModel.getGenThree().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenThree().value?.let { thirdGen -> pokemonAdapter.updateList(thirdGen) }
             }
             gen4.setOnClickListener {
-                infoViewModel.getGenFour().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenFour().value?.let { fourthGen -> pokemonAdapter.updateList(fourthGen) }
             }
             gen5.setOnClickListener {
-                infoViewModel.getGenFive().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenFive().value?.let { fifthGen -> pokemonAdapter.updateList(fifthGen) }
             }
             gen6.setOnClickListener {
-                infoViewModel.getGenSix().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenSix().value?.let { sixthGen -> pokemonAdapter.updateList(sixthGen) }
             }
             gen7.setOnClickListener {
-                infoViewModel.getGenSeven().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenSeven().value?.let { seventhGen -> pokemonAdapter.updateList(seventhGen) }
             }
             gen8.setOnClickListener {
-                infoViewModel.getGenEight().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenEight().value?.let { eighthGen -> pokemonAdapter.updateList(eighthGen) }
             }
             gen9.setOnClickListener {
-                infoViewModel.getGenNine().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.getGenNine().value?.let { ninthGen -> pokemonAdapter.updateList(ninthGen) }
             }
             allGens.setOnClickListener {
-                infoViewModel.allPokes().value?.let { it1 -> pokemonAdapter.updateList(it1) }
+                infoViewModel.allPokes().value?.let { allGens -> pokemonAdapter.updateList(allGens) }
             }
 
 //            Glide.with(selectedPokeImageIv.context)
