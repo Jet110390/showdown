@@ -94,31 +94,40 @@ class MainFragment: Fragment() {
                     pokemonAdapter.updateList(firstGen) }
             }
             gen2.setOnClickListener {
-                infoViewModel.getGenTwo().value?.let { secondGen -> pokemonAdapter.updateList(secondGen) }
+                infoViewModel.getGenTwo().value?.let { secondGen ->
+                    pokemonAdapter.updateList(secondGen) }
             }
             gen3.setOnClickListener {
-                infoViewModel.getGenThree().value?.let { thirdGen -> pokemonAdapter.updateList(thirdGen) }
+                infoViewModel.getGenThree().value?.let { thirdGen ->
+                    pokemonAdapter.updateList(thirdGen) }
             }
             gen4.setOnClickListener {
-                infoViewModel.getGenFour().value?.let { fourthGen -> pokemonAdapter.updateList(fourthGen) }
+                infoViewModel.getGenFour().value?.let { fourthGen ->
+                    pokemonAdapter.updateList(fourthGen) }
             }
             gen5.setOnClickListener {
-                infoViewModel.getGenFive().value?.let { fifthGen -> pokemonAdapter.updateList(fifthGen) }
+                infoViewModel.getGenFive().value?.let { fifthGen ->
+                    pokemonAdapter.updateList(fifthGen) }
             }
             gen6.setOnClickListener {
-                infoViewModel.getGenSix().value?.let { sixthGen -> pokemonAdapter.updateList(sixthGen) }
+                infoViewModel.getGenSix().value?.let { sixthGen ->
+                    pokemonAdapter.updateList(sixthGen) }
             }
             gen7.setOnClickListener {
-                infoViewModel.getGenSeven().value?.let { seventhGen -> pokemonAdapter.updateList(seventhGen) }
+                infoViewModel.getGenSeven().value?.let { seventhGen ->
+                    pokemonAdapter.updateList(seventhGen) }
             }
             gen8.setOnClickListener {
-                infoViewModel.getGenEight().value?.let { eighthGen -> pokemonAdapter.updateList(eighthGen) }
+                infoViewModel.getGenEight().value?.let { eighthGen ->
+                    pokemonAdapter.updateList(eighthGen) }
             }
             gen9.setOnClickListener {
-                infoViewModel.getGenNine().value?.let { ninthGen -> pokemonAdapter.updateList(ninthGen) }
+                infoViewModel.getGenNine().value?.let { ninthGen ->
+                    pokemonAdapter.updateList(ninthGen) }
             }
             allGens.setOnClickListener {
-                infoViewModel.allPokes().value?.let { allGens -> pokemonAdapter.updateList(allGens) }
+                infoViewModel.allPokes().value?.let { allGens ->
+                    pokemonAdapter.updateList(allGens) }
             }
 
 //            Glide.with(selectedPokeImageIv.context)
@@ -165,7 +174,7 @@ class MainFragment: Fragment() {
 
             infoViewModel.fullPokedex.observe(viewLifecycleOwner) {
                 //add animations to recycler view
-                Handler(Looper.getMainLooper()).postDelayed({
+//                Handler(Looper.getMainLooper()).postDelayed({
                     // Stop shimmer effect
                     stopShimmer()
                     pokeRv.apply {
@@ -177,7 +186,7 @@ class MainFragment: Fragment() {
 
 //                        LinearLayoutManager(requireContext())
                     }
-                }, 3000)
+//                }, 3000)
             }
             infoViewModel.fullPokedex.observe(viewLifecycleOwner) { state ->
                 updateUi(state is DataState.Loading)

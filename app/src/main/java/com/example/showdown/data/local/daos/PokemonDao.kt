@@ -7,7 +7,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PokemonDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Upsert
     suspend fun insertPokemon(pokemon: List<Pokemon>)
 
     @Insert
@@ -16,14 +17,23 @@ interface PokemonDao {
     @Query("SELECT * FROM pokemon")
     suspend fun getAllPokemon(): List<Pokemon>
 
+    @Query("SELECT * FROM pokemon ORDER BY name ASC")
+    suspend fun getAllPokemonInAlphabeticalOrder(): List<Pokemon>
+
+    @Query("SELECT * FROM pokemon ORDER BY name DESC")
+    suspend fun getAllPokemonInReverseAlphabeticalOrder(): List<Pokemon>
+
+    @Query("SELECT * FROM pokemon ORDER BY id DESC")
+    suspend fun getAllPokemonInReverseNumericalOrder(): List<Pokemon>
+
     @Query("SELECT count(*) FROM pokemon")
     suspend fun getPokemonCount(): Int
 
     @Query("SELECT * FROM pokemon WHERE speciesNumber IS :species")
     suspend fun getFavPokemonPokedexEntry(species: Int): Pokemon
 
-//    @Query("SELECT * FROM pokemon WHERE name Is :name")
-//    suspend fun getPokemon(): Pokemon
+    @Query("SELECT * FROM pokemon WHERE name IS :name")
+    suspend fun getPokemonByName(name: String): Pokemon
 
     @Query("SELECT * FROM pokemon WHERE id >= 1 AND id <=151")
     fun getGenOne(): List<Pokemon>

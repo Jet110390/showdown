@@ -6,7 +6,7 @@ import com.example.showdown.data.local.entities.Pokemon
 
 @Dao
 interface FavPokemonDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Upsert
     suspend fun addPokemonToFavs(pokemon: FavoritePokemon)
 
     @Delete
