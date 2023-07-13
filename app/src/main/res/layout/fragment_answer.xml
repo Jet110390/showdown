@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/correctHeaderTv"
+        android:id="@+id/answerHeaderTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="It's Blah!"
+        tools:text="It's Blah!"
         android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,18 +20,40 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         tools:srcCompat="@drawable/ic_launcher_foreground"
-        app:layout_constraintTop_toBottomOf="@id/correctHeaderTv"
+        app:layout_constraintTop_toBottomOf="@id/answerHeaderTv"
         app:layout_constraintBottom_toTopOf="@id/homeBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/answerTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/correctPokeIv"
+        app:layout_constraintBottom_toTopOf="@id/homeBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="not entered"
+        android:textSize="24sp"
+        />
     <com.google.android.material.button.MaterialButton
         android:id="@+id/homeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="home"
-        app:layout_constraintTop_toBottomOf="@id/correctPokeIv"
+        android:text="@string/home"
+        app:layout_constraintTop_toBottomOf="@id/answerTv"
+        app:layout_constraintBottom_toTopOf="@id/retryBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/retryBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="try again"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homeBtn"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

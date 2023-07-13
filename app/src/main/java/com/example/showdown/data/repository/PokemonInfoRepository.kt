@@ -364,7 +364,7 @@ class PokemonInfoRepository @Inject constructor(
 //            null
 //        }
 //    }
-    suspend fun getSpeciesData(pokeInfo: PokeInfoDto): SpeciesEntry{
+    private suspend fun getSpeciesData(pokeInfo: PokeInfoDto): SpeciesEntry{
         val variantList: MutableList<VarietyEntry> = mutableListOf()
         var species = SpeciesEntry(
             "",
@@ -374,7 +374,7 @@ class PokemonInfoRepository @Inject constructor(
             0
         )
 
-    try {
+        try {
             val response1= showdownService.getSpecies(pokeInfo.id)
             if (response1.isSuccessful) {
                 val speciesNumber = pokeInfo.species.url.replace(
@@ -499,7 +499,7 @@ class PokemonInfoRepository @Inject constructor(
                     val dexList = pokeList.map {
                         it.toPokemon()
                     }
-                    pokemonDao.insertPokemon(dexList)
+                    pokemonDao.upsertPokemonList(dexList)
                     DataState.Success(dexList)
                 } else {
                     DataState.Error("Could not fetch any pokemon")
@@ -517,7 +517,7 @@ class PokemonInfoRepository @Inject constructor(
         }
     }
 
-    fun getPokedexEntry(
+    private fun getPokedexEntry(
         pokemonInfo: PokeInfoDto,
         speciesInfo: SpeciesEntry
     ): Pokemon {
@@ -552,34 +552,34 @@ class PokemonInfoRepository @Inject constructor(
         return pokemon
     }
 
-    suspend fun getPokedexList2(): DataState<List<Pokemon>>{
+    suspend fun getPokedexList2(): DataState<List<Pokemon>> {
         val isDbEmpty = pokemonDao.getPokemonCount() == 0
         val dex: MutableList<Pokemon> = mutableListOf()
-        if (isDbEmpty){
-            val result = try{
+        if (isDbEmpty) {
+            val result = try {
                 for (i in 1..1010) {
                     val response = getPokeInfoViaDexNumber(i.toString())
                     response.let { poke ->
                         dex.add(getPokedexEntry(poke!!, getSpeciesData(poke)))
                     }
                 }
-                if(dex.size != null){
-                    pokemonDao.insertPokemon(dex)
+                if (dex.size != null) {
+                    pokemonDao.upsertPokemonList(dex)
                     DataState.Success(dex)
                 } else {
                     DataState.Error("Could not fetch any pokemon")
                 }
-            }catch (ex: Exception) {
-                Log.d("heres the error", "${ex.message} & ${ex.cause} exception: $ex")
+            } catch (ex: Exception) {
+                Log.d("here's the error", "${ex.message} & ${ex.cause} exception: $ex")
                 DataState.Error(ex.message ?: "Unexpected error.")
             }
             return result
-            }else {
+        } else {
             // If db not empty return db contents
             val dbResult = pokemonDao.getAllPokemon()
             return DataState.Success(dbResult)
         }
-        }
+    }
 
     fun getGenerationOne(): List<Pokemon> {
         return pokemonDao.getGenOne()

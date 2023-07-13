@@ -3,13 +3,13 @@ package com.example.showdown.data.local.daos
 import androidx.room.*
 import com.example.showdown.data.local.entities.FavoritePokemon
 import com.example.showdown.data.local.entities.Pokemon
-import kotlinx.coroutines.flow.Flow
+import com.example.showdown.data.remote.models.IdOption
 
 @Dao
 interface PokemonDao {
 //    @Insert(onConflict = OnConflictStrategy.REPLACE)
     @Upsert
-    suspend fun insertPokemon(pokemon: List<Pokemon>)
+    suspend fun upsertPokemonList(pokemon: List<Pokemon>)
 
     @Insert
     suspend fun addPokemonToFavs(pokemon: FavoritePokemon)
@@ -34,6 +34,9 @@ interface PokemonDao {
 
     @Query("SELECT * FROM pokemon WHERE name IS :name")
     suspend fun getPokemonByName(name: String): Pokemon
+
+    @Query("SELECT id, name, image FROM pokemon WHERE id IS :id")
+    suspend fun getIdGameOption(id: Int): IdOption
 
     @Query("SELECT * FROM pokemon WHERE id >= 1 AND id <=151")
     fun getGenOne(): List<Pokemon>

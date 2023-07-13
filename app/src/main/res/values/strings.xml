@@ -15,4 +15,13 @@
     <string name="Gen9">Gen9</string>
     <string name="AllGens">All Generations</string>
     <string name="favoritePokemonAmount">%1$s Favorite Pokemon</string>
+    <string name="retry">Try again</string>
+    <string name="replay">Play again</string>
+    <string name="rightAnswer">You got it!</string>
+    <string name="wrongAnswer">Sorry, better luck next time.</string>
+    <string name="wtp">Who\'s that poke\'mon?</string>
+    <string name="submit">Submit</string>
+    <string name="back">Back</string>
+    <string name="home">Home</string>
+    <string name= "answerTitle">It\'s %1$s!</string>
 </resources>
