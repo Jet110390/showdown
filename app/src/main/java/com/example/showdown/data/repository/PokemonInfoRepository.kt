@@ -14,7 +14,6 @@ import com.example.showdown.data.remote.models.VarietyEntry
 import com.example.showdown.data.remote.models.stats.PokeInfoDto
 import com.example.showdown.data.remote.services.ShowdownService
 import com.example.showdown.utils.DataState
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class PokemonInfoRepository @Inject constructor(
@@ -83,7 +82,7 @@ class PokemonInfoRepository @Inject constructor(
     }
 
 
-    suspend fun getSpecies(pokeInfo: List<PokeInfoDto>): MutableList<SpeciesEntry> {
+    suspend fun getSpeciesList(pokeInfo: List<PokeInfoDto>): MutableList<SpeciesEntry> {
         val speciesList: MutableList<SpeciesEntry> = mutableListOf()
         val variantList: MutableList<VarietyEntry> = mutableListOf()
         val legendsImgs: MutableList<String> = mutableListOf(
@@ -155,23 +154,13 @@ class PokemonInfoRepository @Inject constructor(
                     var flavTextData =
                         response1.body()?.flavorTextEntries?.find { it.language.name.equals("en") }
                     val genus = response1.body()?.genera?.find { it.language.name.equals("en") }
-//                   val genus = response1.body()?.genera?.get(7)?.genus
                     val evolvesFrom =
                         response1.body()?.evolvesFromSpecies?.name ?: "no pre-evolution"
                     val varieties = response1.body()?.varieties
-//                   val growlitheResponse = showdownService.getPokeInfo("growlithe-hisui")
-//                   for (i in 0..legendsImgs.size){
-//                       if ("growlithe-hisui" in legendsImgs[i]){
-//                           Log.d("imgUrl","${ legendsImgs[i]}")
-//                       }
-//                       else{Log.d("imgUrl","didnt work")}
-//
-//                   }
+
                     if (varieties?.size!! > 1) {
                         varieties.map {
-//                           Log.d("variety","${it.pokemon}")
                             if (it.pokemon.name != varieties[0].pokemon.name + "-totem"
-//                               && it.pokemon.name != varieties[0].pokemon.name+"-gmax"
                                 && it.pokemon.name != varieties[0].pokemon.name + "-starter"
                                 && it.pokemon.name.takeLast(3) != "cap"
                                 && it.pokemon.name != varieties[0].pokemon.name
@@ -375,96 +364,116 @@ class PokemonInfoRepository @Inject constructor(
 //            null
 //        }
 //    }
+    private suspend fun getSpeciesData(pokeInfo: PokeInfoDto): SpeciesEntry{
+        val variantList: MutableList<VarietyEntry> = mutableListOf()
+        var species = SpeciesEntry(
+            "",
+            "",
+            "",
+            variantList,
+            0
+        )
 
-    suspend fun getPokedex(
+        try {
+            val response1= showdownService.getSpecies(pokeInfo.id)
+            if (response1.isSuccessful) {
+                val speciesNumber = pokeInfo.species.url.replace(
+                    "https://pokeapi.co/api/v2/pokemon-species/",
+                    ""
+                ).takeWhile { it.isDigit() }.toInt()
+                var flavTextData =
+                    response1.body()?.flavorTextEntries?.find { it.language.name.equals("en") }
+                val genus = response1.body()?.genera?.find { it.language.name.equals("en") }
+                val evolvesFrom =
+                    response1.body()?.evolvesFromSpecies?.name ?: "no pre-evolution"
+                val varieties = response1.body()?.varieties
+
+                if (varieties?.size!! > 1) {
+                    varieties.map {
+                        if (it.pokemon.name != varieties[0].pokemon.name + "-totem"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-starter"
+                            && it.pokemon.name.takeLast(3) != "cap"
+                            && it.pokemon.name != varieties[0].pokemon.name
+                            && it.pokemon.name != varieties[0].pokemon.name.replace(
+                                "-50",
+                                "-10"
+                            )
+                            && it.pokemon.name != varieties[0].pokemon.name + "-totem-disguised"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-totem-busted"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-gulping"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-gorging"
+                            && it.pokemon.name != varieties[0].pokemon.name.replace(
+                                "-full-belly",
+                                "-hangry"
+                            )
+                            && it.pokemon.name != varieties[0].pokemon.name + "-eternamax"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-dada"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-cosplay"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-original-cap"
+                        ) {
+                            val info = pokemonDao.getPokemonByName(it.pokemon.name)
+
+                            variantDao.addVariant(
+                                VarietyEntry(
+                                    info?.id!!,
+                                    info?.name!!,
+                                    info?.image,
+                                    info?.type1,
+                                    info.type2 ?: "none",
+                                    info?.height!!,
+                                    info?.weight!!,
+                                    info?.speciesNumber!!,
+                                    info?.officialImg
+                                ).toVariant()
+                            )
+
+                            variantList.add(
+                                VarietyEntry(
+                                    info?.id!!,
+                                    info?.name!!,
+                                    info?.image,
+                                    info?.type1,
+                                    info.type2 ?: "none",
+                                    info?.height!!,
+                                    info?.weight!!,
+                                    info?.speciesNumber!!,
+                                    info?.officialImg
+                                )
+                            )
+                        }
+                    }
+                }
+                species= SpeciesEntry(
+                    flavTextData?.flavorText.toString(),
+                    genus?.genus.toString(),
+                    evolvesFrom,
+                    variantList,
+                    speciesNumber
+                )
+            }
+        }
+        catch (ex: Exception){
+            Log.d("getSpecies exception", "cause: ${ex}")
+            null
+        }
+        return species
+    }
+
+    suspend fun getPokedexList(
         pokemonInfo: MutableList<PokeInfoDto>,
         speciesInfo: MutableList<SpeciesEntry>
     ): DataState<List<Pokemon>> {
         val isDbEmpty = pokemonDao.getPokemonCount() == 0
         var pokeList: MutableList<DexEntry> = mutableListOf()
         if (isDbEmpty) {
-
             val result = try {
-//                 val response = showdownService.getUrls()
                 var count = 0
-                val legendsImgs: MutableList<String> = mutableListOf(
-                    "https://i.ibb.co/G7w8zgn/qwilfish-hisui-official.png",
-                    "https://i.ibb.co/YyGMqbP/electrode-hisui-official.png",
-                    "https://i.ibb.co/V38HNcP/sneasel-hisui-official.png",
-                    "https://i.ibb.co/rG7HGJX/lilligant-hisui-official.png",
-                    "https://i.ibb.co/j53ZZnJ/basculin-white-striped-official.png",
-                    "https://i.ibb.co/TRHg6qf/sliggoo-hisui-official.png",
-                    "https://i.ibb.co/K0DccdJ/goodra-hisui-official.png",
-                    "https://i.ibb.co/0FJpc3H/avalugg-hisui-official.png",
-                    "https://i.ibb.co/2kF27n8/arcanine-hisui-sprite.png",
-                    "https://i.ibb.co/hmz8kPq/avalugg-hisui-sprite.png",
-                    "https://i.ibb.co/rMgNByq/basculin-white-striped-sprite.png",
-                    "https://i.ibb.co/h9YJnKL/braviary-hisui-sprite.png",
-                    "https://i.ibb.co/cbvfznh/decidueye-hisui-sprite.png",
-                    "https://i.ibb.co/v4DMQdY/dialga-origin-sprite.png",
-                    "https://i.ibb.co/nnhwS3t/electrode-hisui-sprite.png",
-                    "https://i.ibb.co/86CHtMs/goodra-hisui-sprite.png",
-                    "https://i.ibb.co/CsHFx9C/growlithe-hisui-sprite.png",
-                    "https://i.ibb.co/BcfDNdr/lilligant-hisui-sprite.png",
-                    "https://i.ibb.co/ZNqwTRD/arcanine-hisui-official.png",
-                    "https://i.ibb.co/YDngTNH/palkia-origin.png",
-                    "https://i.ibb.co/f1wt0Lq/decidueye-hisui-official.png",
-                    "https://i.ibb.co/DpLkX6R/dialga-origin-official.png",
-                    "https://i.ibb.co/VvcGDZx/palkia-origin-official.png",
-                    "https://i.ibb.co/gJwgHd5/braviary-hisui-official.png",
-                    "https://i.ibb.co/YQj6R8t/growlithe-hisui-official.png",
-                    "https://i.ibb.co/6DHwZsK/samurott-hisui-official.png",
-                    "https://i.ibb.co/VQGx9Bm/typhlosion-hisui-official.png",
-                    "https://i.ibb.co/Y3g0j4H/voltorb-hisui-official.png",
-                    "https://i.ibb.co/6YrsLqM/zoroark-hisui-official.png",
-                    "https://i.ibb.co/MgqC06Z/zorua-hisui-official.png",
-                    "https://i.ibb.co/b3KTHrj/qwilfish-hisui-sprite.png",
-                    "https://i.ibb.co/MpgvbYb/samurott-hisui-sprite.png",
-                    "https://i.ibb.co/BPJGMhv/sligoo-hisui-sprite.png",
-                    "https://i.ibb.co/R4r8mzg/sneasel-hisui-sprite.png",
-                    "https://i.ibb.co/P59x0Vn/typhlosion-hisui-sprite.png",
-                    "https://i.ibb.co/kDprYrY/voltorb-hisui-sprite.png",
-                    "https://i.ibb.co/rc9xFrQ/zoroark-hisui-sprite.png",
-                    "https://i.ibb.co/ZMCWygt/zorua-hisui-sprite.png",
-                    "https://i.ibb.co/GPDYjcf/sneasler-official.png",
-                    "https://i.ibb.co/68zPzWG/ursaluna-official.png",
-                    "https://i.ibb.co/2vYM2PX/overqwil-official.png",
-                    "https://i.ibb.co/BNDrw6b/enamorus-therian-official.png",
-                    "https://i.ibb.co/sRWsSgM/enamorus-incarnate-official.png",
-                    "https://i.ibb.co/RCVCNH1/basculegion-female-official.png",
-                    "https://i.ibb.co/Php9CR2/basculegion-female-sprite.png",
-                    "https://i.ibb.co/qrp8ZwS/basculegion-male-sprite.png",
-                    "https://i.ibb.co/7Vn3cVq/enamorus-incarnate-sprite.png",
-                    "https://i.ibb.co/HY4WmHp/enamorus-therian-sprite.png",
-                    "https://i.ibb.co/30jZW5B/kleavor-sprite.png",
-                    "https://i.ibb.co/Q89sGzQ/overqwil-sprite.png",
-                    "https://i.ibb.co/QCTwg6c/kleavor-official.png",
-                    "https://i.ibb.co/m5NgSWv/basculegion-male-official.png",
-                    "https://i.ibb.co/SPm1zhw/wyrdeer-official.png",
-                    "https://i.ibb.co/N7PptbG/sneasler-sprite.png",
-                    "https://i.ibb.co/94s2FfB/ursaluna-sprite.png",
-                    "https://i.ibb.co/BVhGW1f/wyrdeer-sprite.png",
-                )
                 for (i in 0 until pokemonInfo.size) {
-//                    if(i>=904){
-//                     Log.d("get pokedex at i=$i"," spec= ${speciesInfo[i]} info=${pokemonInfo[i].name}")}
                     pokeList.add(
                         DexEntry(
                             pokemonInfo[i].id,
                             pokemonInfo[i].name,
                             pokemonInfo[i].sprites?.frontDefault!!,
-//                         if(pokemonInfo[i].sprites?.frontDefault == null){
-//                             var url = ""
-//                             (0..legendsImgs.size-1).forEach { d ->
-//                                 if (pokemonInfo[i].name + "-sprite"  in legendsImgs[d]) {
-//                                     Log.d("sprite success","${legendsImgs[d]}")
-////                                                   legendsImgs[i]
-//                                     url=legendsImgs[d]
-//                                 }
-//                             }
-//                             Log.d("image","${url}")
-//                             url
-//                         }else{"${pokemonInfo[i].sprites?.frontDefault}"},
                             pokemonInfo[i].types[0]?.type?.name,
                             if (pokemonInfo[i].types.size > 1) {
                                 pokemonInfo[i].types[1]?.type?.name
@@ -480,63 +489,17 @@ class PokemonInfoRepository @Inject constructor(
                             pokemonInfo[i].stats[4].baseStat,
                             pokemonInfo[i].stats[5].baseStat,
                             speciesInfo[i],
-//                         if(pokemonInfo[i].sprites?.other?.officialArtwork?.frontDefault == null){
-//                             var url = ""
-//                             (0..legendsImgs.size-1).forEach { d ->
-//                                 if (pokemonInfo[i].name + "-official"  in legendsImgs[d]) {
-//                                                   Log.d("official success","${legendsImgs[d]}")
-////                                                   legendsImgs[i]
-//                                     url=legendsImgs[d]
-//                                 }
-//                             }
-////                             Log.d("sprite","${url}")
-//                             url
-//                         }else{"${pokemonInfo[i].sprites?.other?.officialArtwork?.frontDefault}"}
                             pokemonInfo[i].sprites?.other?.officialArtwork?.frontDefault
-//                         pokemonInfo[i].sprites.frontShiny
                         )
                     )
-
-//                     Log.d("count","${count} ${speciesInfo.size}")
                     count++
-
                 }
-//                 var variants: MutableList<VarietyEntry> = mutableListOf()
-//                 pokeList.add(
-//                     DexEntry(
-//                         899,
-//                         "wyrdeer",
-//                         "https://i.ibb.co/BVhGW1f/wyrdeer.png",
-//                         "normal",
-//                         "psychic",
-//                         18,
-//                         951,
-//                         103,
-//                         105,
-//                         72,
-//                         105,
-//                         75,
-//                         65,
-//                         SpeciesEntry(
-//                             "The black orbs shine with an uncanny light when the Pokémon is erecting invisible barriers. The fur shed from its beard retains heat well and is a highly useful material for winter clothing.",
-//                             "Big Horn Pokémon",
-//                             "stantler",
-//                             variants,
-//                             899),
-//                         "https://archives.bulbagarden.net/media/upload/7/75/899Wyrdeer.png"
-////                         "mipmap-xxxhdpi/wyrdeer_official_foreground.png"
-//                     )
-//                 )
 
-//                 Log.d("getPokedex success","res: ${pokeList}")
                 if (pokeList.size != null) {
                     val dexList = pokeList.map {
-//                         Log.d("getPokedex success","res: ${it.name}")
                         it.toPokemon()
-//
                     }
-//                Log.d("dexlist","$dexList")
-                    pokemonDao.insertPokemon(dexList)
+                    pokemonDao.upsertPokemonList(dexList)
                     DataState.Success(dexList)
                 } else {
                     DataState.Error("Could not fetch any pokemon")
@@ -546,14 +509,74 @@ class PokemonInfoRepository @Inject constructor(
                 Log.d("heres the error", "${ex.message} & ${ex.cause} exception: $ex")
                 DataState.Error(ex.message ?: "Unexpected error.")
             }
-//             Log.d("result","pokelist $pokeList")
             return result
-//             emit(result)
         } else {
             // If db not empty return db contents
             val dbResult = pokemonDao.getAllPokemon()
-//             Log.d("getPokedex success","List is ${dbResult.size} long")
-//             emit(DataState.Success(dbResult))
+            return DataState.Success(dbResult)
+        }
+    }
+
+    private fun getPokedexEntry(
+        pokemonInfo: PokeInfoDto,
+        speciesInfo: SpeciesEntry
+    ): Pokemon {
+        var pokemon = Pokemon(0, "", "", "", "", 0, 0, "", 0, 0, 0, 0, 0, 0, "", "", "", 0)
+        try {
+            pokemon = DexEntry(
+                pokemonInfo.id,
+                pokemonInfo.name,
+                pokemonInfo.sprites?.frontDefault!!,
+                pokemonInfo.types[0]?.type?.name,
+                if (pokemonInfo.types.size > 1) {
+                    pokemonInfo.types[1]?.type?.name
+                } else {
+                    "none"
+                },
+                pokemonInfo.height,
+                pokemonInfo.weight,
+                pokemonInfo.stats[0].baseStat,
+                pokemonInfo.stats[1].baseStat,
+                pokemonInfo.stats[2].baseStat,
+                pokemonInfo.stats[3].baseStat,
+                pokemonInfo.stats[4].baseStat,
+                pokemonInfo.stats[5].baseStat,
+                speciesInfo,
+                pokemonInfo.sprites?.other?.officialArtwork?.frontDefault
+            ).toPokemon()
+
+
+        } catch (ex: Exception) {
+            Log.d("heres the error", "${ex.message} & ${ex.cause} exception: $ex")
+        }
+        return pokemon
+    }
+
+    suspend fun getPokedexList2(): DataState<List<Pokemon>> {
+        val isDbEmpty = pokemonDao.getPokemonCount() == 0
+        val dex: MutableList<Pokemon> = mutableListOf()
+        if (isDbEmpty) {
+            val result = try {
+                for (i in 1..1010) {
+                    val response = getPokeInfoViaDexNumber(i.toString())
+                    response.let { poke ->
+                        dex.add(getPokedexEntry(poke!!, getSpeciesData(poke)))
+                    }
+                }
+                if (dex.size != null) {
+                    pokemonDao.upsertPokemonList(dex)
+                    DataState.Success(dex)
+                } else {
+                    DataState.Error("Could not fetch any pokemon")
+                }
+            } catch (ex: Exception) {
+                Log.d("here's the error", "${ex.message} & ${ex.cause} exception: $ex")
+                DataState.Error(ex.message ?: "Unexpected error.")
+            }
+            return result
+        } else {
+            // If db not empty return db contents
+            val dbResult = pokemonDao.getAllPokemon()
             return DataState.Success(dbResult)
         }
     }

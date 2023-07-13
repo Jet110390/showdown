@@ -1,26 +1,21 @@
 package com.example.showdown.ui.viewmodel
 
+import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.showdown.data.local.entities.FavoritePokemon
 import com.example.showdown.data.local.entities.Pokemon
-import com.example.showdown.data.local.entities.Variant
-import com.example.showdown.data.remote.models.DexEntry
 import com.example.showdown.data.remote.models.SpeciesEntry
 import com.example.showdown.data.remote.models.Urls
 import com.example.showdown.data.remote.models.stats.PokeInfoDto
-import com.example.showdown.data.remote.models.urls.ResponseDto
 import com.example.showdown.data.repository.PokemonInfoRepository
 import com.example.showdown.utils.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import retrofit2.http.Url
 import javax.inject.Inject
+import kotlin.system.measureTimeMillis
 
 @HiltViewModel
 class PokemonInfoViewModel @Inject constructor(
@@ -78,39 +73,53 @@ class PokemonInfoViewModel @Inject constructor(
 //    }
 
     private fun getPokeInfo() {
-
-        viewModelScope.launch(Default) {
-            val response = pokemonInfoRepository.getPokeUrls()
-            _pokemonUrls.postValue(response)
-             response?.let { it ->
-
-                it.map {
-                    pokemonInfoRepository.getPokemonInfo(it)?.let { it1 -> pokeInfo.add(it1) }
-//                    pokemonInfoRepository.getSpecies(it)?.let { it1 -> speciesInfo.add(it1) }
-//                        Log.d("innerRes","${pokeInfo[0].name} ${speciesInfo[0]}")
-                    }
-            }
-            speciesInfo=pokemonInfoRepository.getSpecies(pokeInfo)
-
-
-            val pokedex=pokemonInfoRepository.getPokedex(pokeInfo,speciesInfo)
-            _fullPokedex.postValue(pokedex)
-        }
+//        first way
 //        viewModelScope.launch(Default) {
-//            var i = 1
-//            while (i < 906) {
-//                viewModelScope.launch(IO) {
-//                    val response=pokemonInfoRepository.getPokeInfoViaDexNumber(i.toString())
-//                    response?.let { it ->
-//                        pokeInfo.add(it)
+//            val response = pokemonInfoRepository.getPokeUrls()
+//            _pokemonUrls.postValue(response)
+//             response?.let { it ->
+//
+//                it.map {
+//                    pokemonInfoRepository.getPokemonInfo(it)?.let { it1 -> pokeInfo.add(it1) }
+////                    pokemonInfoRepository.getSpecies(it)?.let { it1 -> speciesInfo.add(it1) }
+////                        Log.d("innerRes","${pokeInfo[0].name} ${speciesInfo[0]}")
 //                    }
-//                }
-//                i++
 //            }
-//            speciesInfo = pokemonInfoRepository.getSpecies(pokeInfo)
-//            val pokedex = pokemonInfoRepository.getPokedex(pokeInfo,speciesInfo)
+//            speciesInfo=pokemonInfoRepository.getSpeciesList(pokeInfo)
+//
+//
+//            val pokedex=pokemonInfoRepository.getPokedexList(pokeInfo,speciesInfo)
 //            _fullPokedex.postValue(pokedex)
 //        }
+
+//        second way
+//        for (i in 1..1010) {
+//            viewModelScope.async(IO) {
+//                val response = pokemonInfoRepository.getPokeInfoViaDexNumber(i.toString())
+//                response?.let { poke ->
+//                    pokeInfo.add(poke)
+//                }
+//            }
+//        }
+//        viewModelScope.async(IO) {
+//            speciesInfo = pokemonInfoRepository.getSpeciesList(pokeInfo)
+//        }
+//        viewModelScope.async(IO) {
+//            val pokedex = pokemonInfoRepository.getPokedexList(pokeInfo,speciesInfo)
+//            _fullPokedex.postValue(pokedex)
+//        }
+
+//        third way
+        val time = measureTimeMillis{
+            viewModelScope.async(IO) {
+                val response = pokemonInfoRepository.getPokedexList2()
+                response.let {
+                    _fullPokedex.postValue(it)
+                }
+            }
+        }
+        Log.d(TAG, "Request took $time")
+
     }
 
 

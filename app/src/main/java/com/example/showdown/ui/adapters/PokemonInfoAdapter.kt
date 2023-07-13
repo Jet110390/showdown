@@ -1,5 +1,6 @@
 package com.example.showdown.ui.adapters
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -36,17 +37,19 @@ class PokemonInfoAdapter(
     }
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
-        holder.addFavorite(pokemonList[position]!!,pokemonInfoViewModel)
-        holder.bind(pokemonList[position])
-        holder.itemView.setOnClickListener {
-            _officialArtworkUrl.postValue(holder.getOfficialImage(pokemonList[position]!!, pokemonInfoViewModel).value)
-            Log.d("clicked","name: ${pokemonList[position]?.name}")
+        if(pokemonList[position] != null){
+            holder.addFavorite(pokemonList[position]!!,pokemonInfoViewModel)
+            holder.bind(pokemonList[position])
+            holder.itemView.setOnClickListener {
+                _officialArtworkUrl.postValue(holder.getOfficialImage(pokemonList[position]!!, pokemonInfoViewModel).value)
+                Log.d("clicked","name: ${pokemonList[position]?.name}")
 
 
-//            Log.d("should show", "${officialArtworkUrl.value}")
-//            val variantsList = pokemonInfoViewModel.getVars(pokemonList[position]!!)
-            val directions = MainFragmentDirections.mainFragmentToPokedexFragmentAction(pokemonList[position]!!)
-            holder.itemView.findNavController().navigate(directions)
+    //            Log.d("should show", "${officialArtworkUrl.value}")
+    //            val variantsList = pokemonInfoViewModel.getVars(pokemonList[position]!!)
+                val directions = MainFragmentDirections.mainFragmentToPokedexFragmentAction(pokemonList[position]!!)
+                holder.itemView.findNavController().navigate(directions)
+            }
         }
     }
 
@@ -144,6 +147,8 @@ class PokemonInfoAdapter(
 
                     }
                     Glide.with(pokeIv.context).load("${pokemon?.image}").into(pokeIv)
+//            val black = floatArrayOf(0F,0F,0F)
+//            pokeIv.setColorFilter(Color.HSVToColor(black))
         }
     }
 }
