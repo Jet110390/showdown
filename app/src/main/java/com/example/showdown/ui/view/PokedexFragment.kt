@@ -9,14 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.webkit.WebViewFragment
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.showdown.R
 import com.example.showdown.databinding.FragmentPokedexBinding
 import com.example.showdown.ui.adapters.VariantAdapter
 import com.example.showdown.ui.viewmodel.FavPokemonViewModel
@@ -29,8 +26,8 @@ class PokedexFragment: Fragment() {
     private var _binding: FragmentPokedexBinding? = null
     private val binding: FragmentPokedexBinding get() = _binding!!
 
-    private val favPokeViewModel: FavPokemonViewModel by viewModels()
-    private val variantViewModel: VariantViewModel by viewModels()
+    private val favPokeViewModel: FavPokemonViewModel by activityViewModels()
+    private val variantViewModel: VariantViewModel by activityViewModels()
 
 //    private val variantAdapter by lazy {
 //        VariantAdapter(variantViewModel)

@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main)
  * who's that pokemon feature
  *      implement easy mode(two options) and hard mode(fill in the blank)
  *      should be able to switch between views on button click
+ *      add wtp streak(maybe put this in profile fragment and game fragment along with most consecutively)
  *      make it so that hard mode isnt case sensitive
  * team builder feature
  *      battle notes for each team?

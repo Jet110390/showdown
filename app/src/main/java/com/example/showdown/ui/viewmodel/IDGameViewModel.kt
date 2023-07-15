@@ -1,5 +1,7 @@
 package com.example.showdown.ui.viewmodel
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,8 +18,10 @@ class IDGameViewModel @Inject constructor(
     private val idGameRepository: WTPRepository
 ): ViewModel() {
 
-    private val _options: MutableLiveData<MutableList<IdOption>?> = MutableLiveData()
-    var options: LiveData<MutableList<IdOption>?> = _options
+    private val _normalModeOptions: MutableLiveData<MutableList<IdOption>?> = MutableLiveData()
+    var normalModeOptions: LiveData<MutableList<IdOption>?> = _normalModeOptions
+    private val _easyModeOptions: MutableLiveData<MutableList<IdOption>?> = MutableLiveData()
+    var easyModeOptions: LiveData<MutableList<IdOption>?> = _easyModeOptions
     private val _answerName : MutableLiveData<String?> = MutableLiveData()
     var answerName : LiveData<String?> = _answerName
     private val _answerImage: MutableLiveData<String?> = MutableLiveData()
@@ -26,15 +30,30 @@ class IDGameViewModel @Inject constructor(
     var choice : LiveData<String?> =_choice
     private val _correctOrIncorrectAnswer: MutableLiveData<Boolean?> = MutableLiveData()
     var correctOrIncorrectAnswer : LiveData<Boolean?> =_correctOrIncorrectAnswer
+    private val _mode: MutableLiveData<String?> = MutableLiveData()
+    var mode : LiveData<String?> =_mode
 
 
     fun getGameData(){
         viewModelScope.async(Default) {
-            val answer = idGameRepository.correctAnswer()
-            _options.postValue(idGameRepository.normalModeOptions)
-            _answerName.postValue(answer.name)
-            _answerImage.postValue(answer.image)
+            var answer: IdOption? = null
+            when(mode.value){
+                "Easy" -> {
+                    answer = idGameRepository.easyModeCorrectAnswer()
+                    _easyModeOptions.postValue(idGameRepository.easyModeOptions)}
+                "Normal" ->{
+                    answer = idGameRepository.normalModeCorrectAnswer()
+                    _normalModeOptions.postValue(idGameRepository.normalModeOptions)}
+                "Hard" -> answer = idGameRepository.hardModeCorrectAnswer()
+            }
+            _answerName.postValue(answer?.name)
+            _answerImage.postValue(answer?.image)
         }
+    }
+
+    fun selectGameMode(gameMode: String){
+        Log.d(TAG, "gameViewModel select game mode parameter is $gameMode")
+        _mode.postValue(gameMode)
     }
 
     fun chooseAnswer(option: String){
@@ -42,10 +61,21 @@ class IDGameViewModel @Inject constructor(
     }
 
     fun clearGameData(){
-        idGameRepository.clearOptions()
+        when(mode.value) {
+            "Easy" -> idGameRepository.clearEasyModeOptions()
+            "Normal" -> idGameRepository.clearNormalModeOptions()
+            "Hard" -> idGameRepository.clearHardModeOptions()
+        }
     }
 
     fun checkAnswer(choice:String, answer: String){
-        _correctOrIncorrectAnswer.postValue(choice == answer)
+        _correctOrIncorrectAnswer.postValue(answer.equals(choice,true))
+    }
+
+    fun increaseDifficulty(){
+        when(mode.value) {
+            "Easy"-> _mode.postValue("Normal")
+            "Normal"-> _mode.postValue("Hard")
+        }
     }
 }

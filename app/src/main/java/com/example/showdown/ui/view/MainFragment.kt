@@ -1,16 +1,17 @@
 package com.example.showdown.ui.view
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.showdown.data.local.entities.Pokemon
 import com.example.showdown.databinding.FragmentMainBinding
 import com.example.showdown.ui.adapters.PokemonInfoAdapter
+import com.example.showdown.ui.viewmodel.IDGameViewModel
 import com.example.showdown.ui.viewmodel.PokemonInfoViewModel
 import com.example.showdown.utils.DataState
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +30,8 @@ class MainFragment: Fragment() {
     private val binding: FragmentMainBinding get() = _binding!!
 
     private val infoViewModel: PokemonInfoViewModel by viewModels()
+
+    private val gameViewModel: IDGameViewModel by activityViewModels()
 
     private lateinit var dexList: List<Pokemon>
 
@@ -52,6 +56,7 @@ class MainFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         startShimmer()
+        var selectedMode = ""
         with(binding) {
 
 //            pokemonAdapter.setOnItemClickListener(object : PokemonInfoAdapter.onItemClickListener{
@@ -69,9 +74,26 @@ class MainFragment: Fragment() {
                 val direction = MainFragmentDirections.mainFragmentToTeamsFragmentAction()
                 findNavController().navigate(direction)
             }
+
+            val options= arrayOf("Easy","Normal","Hard")
+            val gameDialog= AlertDialog.Builder(requireContext())
+                .setTitle("Choose the difficulty")
+                .setSingleChoiceItems(options,-1){_,i->
+                    Log.d(TAG, "main fragment game dialog option picked ${options[i]} mode")
+                    selectedMode = options[i]
+                }
+                .setPositiveButton("Start"){_,_->
+                    updateViewBasedOnDifficulty(selectedMode)
+                    val direction = MainFragmentDirections.mainFragmentToGameFragmentAction()
+                    findNavController().navigate(direction)
+                }
+                .setNegativeButton("Cancel"){DialogInterface,_->
+                    DialogInterface.cancel()
+                }
+                .create()
+
             WTPBtn.setOnClickListener {
-                val direction = MainFragmentDirections.mainFragmentToGameFragmentAction()
-                findNavController().navigate(direction)
+                gameDialog.show()
             }
             pokeSv.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
                 android.widget.SearchView.OnQueryTextListener {
@@ -204,6 +226,21 @@ class MainFragment: Fragment() {
             }
         }
     }
+
+    private fun updateViewBasedOnDifficulty(choice: String) {
+        when (choice) {
+            "Easy" -> {
+                gameViewModel.selectGameMode("Easy")
+            }
+            "Normal" -> {
+                gameViewModel.selectGameMode("Normal")
+            }
+            "Hard" -> {
+                gameViewModel.selectGameMode("Hard")
+            }
+        }
+    }
+
     private fun startShimmer() {
         binding.shimmerFrameLayout.startShimmer()
         binding.shimmerFrameLayout.visibility = View.VISIBLE

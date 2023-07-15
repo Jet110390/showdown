@@ -1,6 +1,5 @@
 package com.example.showdown.ui.adapters
 
-import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +7,6 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.distinctUntilChanged
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,8 +14,6 @@ import com.example.showdown.data.local.entities.Pokemon
 import com.example.showdown.databinding.PokeItemBinding
 import com.example.showdown.ui.view.MainFragmentDirections
 import com.example.showdown.ui.viewmodel.PokemonInfoViewModel
-import kotlinx.coroutines.flow.flowOf
-
 import kotlinx.coroutines.runBlocking
 
 class PokemonInfoAdapter(
@@ -124,7 +120,8 @@ class PokemonInfoAdapter(
 //            if (binding.addToFavsBtn.isVisible)
             binding.addToFavsBtn.setOnClickListener {
                 runBlocking {
-                    viewModel.addToFavs(poke) }
+                    viewModel.addToFavs(poke)
+                }
             }
         }
         fun getOfficialImage(poke: Pokemon, viewModel: PokemonInfoViewModel): LiveData<String> {
