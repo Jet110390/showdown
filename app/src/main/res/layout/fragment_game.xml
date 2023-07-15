@@ -21,18 +21,20 @@
         android:layout_height="250dp"
         tools:src="@drawable/ic_launcher_foreground"
         app:layout_constraintTop_toBottomOf="@id/gameTv"
-        app:layout_constraintBottom_toTopOf="@id/radioBtnBox"
+        app:layout_constraintBottom_toTopOf="@id/normalRadioBtnBox"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="#000000"/>
     <RadioGroup
-        android:id="@+id/radioBtnBox"
+        android:id="@+id/normalRadioBtnBox"
         android:layout_width="175dp"
         android:layout_height="175dp"
         app:layout_constraintTop_toBottomOf="@id/silhouetteIv"
         app:layout_constraintBottom_toTopOf="@id/gameSubmitBtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        >
         <RadioButton
             android:id="@+id/radioBtn1"
             android:layout_width="wrap_content"
@@ -54,12 +56,65 @@
             android:layout_height="wrap_content"
             tools:text="option4"/>
     </RadioGroup>
+    <RadioGroup
+        android:id="@+id/easyRadioBtnBox"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        app:layout_constraintTop_toBottomOf="@id/silhouetteIv"
+        app:layout_constraintBottom_toTopOf="@id/gameSubmitBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone">
+        <RadioButton
+            android:id="@+id/easyRadioBtn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="option1"/>
+        <RadioButton
+            android:id="@+id/easyRadioBtn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="option2"/>
+    </RadioGroup>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/hardModeLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/silhouetteIv"
+        app:layout_constraintBottom_toTopOf="@id/gameSubmitBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:endIconMode="clear_text"
+        app:counterEnabled="true"
+        app:counterMaxLength="15"
+        android:visibility="gone"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/hardModeEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:maxLength="15"
+            android:hint="Pokemon Name"
+            android:textSize="16sp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/buttonBarrier"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="hardModeLayout, easyRadioBtnBox, normalRadioBtnBox"
+        />
     <com.google.android.material.button.MaterialButton
         android:id="@+id/gameSubmitBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/submit"
-        app:layout_constraintTop_toBottomOf="@id/radioBtnBox"
+        app:layout_constraintTop_toBottomOf="@id/buttonBarrier"
         app:layout_constraintBottom_toTopOf="@id/gameBackBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -50,10 +50,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="try again"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/difficultyBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/homeBtn"
+        />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/difficultyBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Increase Difficulty"
+        android:text="@string/difficultyUp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

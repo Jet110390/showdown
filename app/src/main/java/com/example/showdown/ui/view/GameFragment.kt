@@ -1,10 +1,12 @@
 package com.example.showdown.ui.view
 
-import android.graphics.Color
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -34,14 +36,39 @@ class GameFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            viewModel.options.observe(viewLifecycleOwner){ options->
-                options?.let {
-                    radioBtn1.text = it[0].name
-                    radioBtn2.text = it[1].name
-                    radioBtn3.text = it[2].name
-                    radioBtn4.text = it[3].name }
-
+            viewModel.mode.observe(viewLifecycleOwner){
+                Log.d(TAG, "setting up ${viewModel.mode.value} mode game view ")
+                when(it){
+                    "Easy"->{
+                        easyRadioBtnBox.visibility = View.VISIBLE
+                        viewModel.easyModeOptions.observe(viewLifecycleOwner){ options->
+                            options?.let {easyOptions ->
+                                easyRadioBtn1.text = easyOptions[0].name
+                                easyRadioBtn2.text = easyOptions[1].name
+                            }
+                        }
+                    }
+                    "Normal"->{
+                        normalRadioBtnBox.visibility = View.VISIBLE
+                        viewModel.normalModeOptions.observe(viewLifecycleOwner){ options->
+                            options?.let {normalOptions ->
+                                radioBtn1.text = normalOptions[0].name
+                                radioBtn2.text = normalOptions[1].name
+                                radioBtn3.text = normalOptions[2].name
+                                radioBtn4.text = normalOptions[3].name
+                            }
+                        }
+                    }
+                    "Hard"->{
+                        hardModeLayout.visibility = View.VISIBLE
+                        hardModeEt.doOnTextChanged { text, start, before, count ->
+                            gameSubmitBtn.isEnabled = true
+                            viewModel.chooseAnswer(text.toString())
+                        }
+                    }
+                }
             }
+
             radioBtn1.setOnClickListener{
                 viewModel.chooseAnswer(radioBtn1.text as String)
                 gameSubmitBtn.isEnabled= true
@@ -58,10 +85,16 @@ class GameFragment: Fragment() {
                 viewModel.chooseAnswer(radioBtn4.text as String)
                 gameSubmitBtn.isEnabled= true
             }
+            easyRadioBtn1.setOnClickListener{
+                viewModel.chooseAnswer(easyRadioBtn1.text as String)
+                gameSubmitBtn.isEnabled= true
+            }
+            easyRadioBtn2.setOnClickListener{
+                viewModel.chooseAnswer(easyRadioBtn2.text as String)
+                gameSubmitBtn.isEnabled= true
+            }
             viewModel.answerImage.observe(viewLifecycleOwner){image ->
                 Glide.with(silhouetteIv.context).load(image).into(silhouetteIv)
-                val black = floatArrayOf(0F, 0F, 0F)
-                silhouetteIv.setColorFilter(Color.HSVToColor(black))
             }
 
             gameSubmitBtn.setOnClickListener {

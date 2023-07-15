@@ -6,15 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.showdown.R
 import com.example.showdown.databinding.FragmentFavsBinding
 import com.example.showdown.ui.adapters.FavPokemonAdapter
-import com.example.showdown.ui.adapters.PokemonInfoAdapter
 import com.example.showdown.ui.viewmodel.FavPokemonViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,7 +28,7 @@ class FavsFragment : Fragment() {
     private var _binding: FragmentFavsBinding? = null
     private val binding: FragmentFavsBinding get() = _binding!!
 
-    val favsViewModel: FavPokemonViewModel by viewModels()
+    val favsViewModel: FavPokemonViewModel by activityViewModels()
 
 
     override fun onCreateView(

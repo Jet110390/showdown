@@ -66,6 +66,16 @@ class AnswerFragment : Fragment() {
                 val direction = AnswerFragmentDirections.answerFragmentToGameFragmentAction()
                 findNavController().navigate(direction)
             }
+            if(viewModel.mode.value == getString(R.string.hard)){
+                difficultyBtn.visibility = View.GONE
+            }else{
+                difficultyBtn.setOnClickListener {
+                    viewModel.clearGameData()
+                    viewModel.increaseDifficulty()
+                    val direction = AnswerFragmentDirections.answerFragmentToGameFragmentAction()
+                    findNavController().navigate(direction)
+                }
+            }
         }
     }
 
