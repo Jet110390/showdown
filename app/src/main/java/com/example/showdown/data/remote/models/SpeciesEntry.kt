@@ -5,6 +5,8 @@ data class SpeciesEntry(
     val title: String?,
     val preEvo: String?,
     val varieties: MutableList<VarietyEntry>,
-    val speciesNumber: Int
+    val speciesNumber: Int,
+    val speciesName: String?,
+    val varietyAmount: Int?
 
 )

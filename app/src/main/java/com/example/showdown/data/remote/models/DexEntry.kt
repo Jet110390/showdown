@@ -47,7 +47,9 @@ data class DexEntry(
             title = species.title,
             preEvo = species.preEvo,
             officialImg = officialImg,
-            speciesNumber = species.speciesNumber
+            speciesNumber = species.speciesNumber,
+            speciesName = species.speciesName,
+            variantAmount = species.varietyAmount
 //            shinyImg = shinyImg
 
 
@@ -73,7 +75,8 @@ data class DexEntry(
 //            title = species.title,
 //            preEvo = species.preEvo,
             officialImg = officialImg,
-            speciesNumber = species.speciesNumber
+            speciesNumber = species.speciesNumber,
+            speciesName = species.speciesName
         )
     }
 }

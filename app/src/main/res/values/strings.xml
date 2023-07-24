@@ -28,4 +28,5 @@
     <string name="easy">Easy</string>
     <string name="normal">Normal</string>
     <string name="hard">Hard</string>
+    <string name="bulbapediaLink">"https://bulbapedia.bulbagarden.net/wiki/%1$s_(Pokémon)"</string>
 </resources>

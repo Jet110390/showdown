@@ -1,7 +1,5 @@
 package com.example.showdown.ui.view
 
-//import android.app.Fragment
-//import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.showdown.R
 import com.example.showdown.databinding.FragmentPokedexBinding
 import com.example.showdown.ui.adapters.VariantAdapter
 import com.example.showdown.ui.viewmodel.FavPokemonViewModel
@@ -84,7 +83,9 @@ class PokedexFragment: Fragment() {
             moreInfoTv.setOnClickListener{
                 bulbapediaWv.toggleVisibility()
                 dexSv.toggleVisibility()
-                loadBulbapediaPage(pokemon?.name.upper())
+                if (pokemon != null) {
+                    loadBulbapediaPage(pokemon.name.upper(), pokemon.speciesName!!, pokemon.variantAmount!!)
+                }
             }
             variantViewModel.variantData.observe(viewLifecycleOwner) { variantData ->
                 //add animations to recycler view
@@ -131,8 +132,123 @@ class PokedexFragment: Fragment() {
 //            }
         }
     }
-    private fun loadBulbapediaPage(name: String) {
-        val bulbapediaURL = "https://bulbapedia.bulbagarden.net/wiki/${name}_(Pokémon)"
+    inner class WrongNames{
+        val wrongNamesList = listOf(
+        "Nidoran-f",
+        "Nidoran-m",
+        "Mr-mime",
+        "Ho-oh",
+        "Mime-jr",
+        "Type-null",
+        "Tapu-koko",
+        "Tapu-lele",
+        "Tapu-bulu",
+        "Tapu-fini",
+        "Mr-rime",
+        "Great-tusk",
+        "Scream-tail",
+        "Brute-bonnet",
+        "Flutter-mane",
+        "Slither-wing",
+        "Sandy-shocks",
+        "Iron-treads",
+        "Iron-bundle",
+        "Iron-hands",
+        "Iron-jugulis",
+        "Iron-moth",
+        "Iron-thorns",
+        "Wo-chien",
+        "Chien-pao",
+        "Ting-lu",
+        "Chi-yu",
+        "Roaring-moon",
+        "Iron-valiant",
+        "Walking-wake",
+        "Iron-leaves"
+        )
+
+        val nidoranF = "Nidoran♀"
+        val nidoranM = "Nidoran♂"
+        val mrMime = "Mr._Mime"
+        val hoOh = "Ho-Oh"
+        val mimeJr = "Mime_Jr."
+        val typeNull = "Type:_Null"
+        val tapuKoko = "Tapu_Koko"
+        val tapuLele = "Tapu_Lele"
+        val tapuBulu = "Tapu_Bulu"
+        val tapuFini = "Tapu_Fini"
+        val mrRime = "Mr._Rime"
+        val greatTusk = "Great_Tusk"
+        val screamTail = "Scream_Tail"
+        val bruteBonnet = "Brute_Bonnet"
+        val flutterMane = "Flutter_Mane"
+        val slitherWing = "Slither_Wing"
+        val sandyShocks = "Sandy_Shocks"
+        val ironTreads = "Iron_Treads"
+        val ironBundle = "Iron_Bundle"
+        val ironHands = "Iron_Hands"
+        val ironJugulis = "Iron_Jugulis"
+        val ironMoth = "Iron_Moth"
+        val ironThorns = "Iron_Thorns"
+        val woChien = "Wo-Chien"
+        val chienPao = "Chien-Pao"
+        val tingLu = "Ting-Lu"
+        val chiYu = "Chi-Yu"
+        val roaringMoon = "Roaring_Moon"
+        val ironValiant = "Iron_Valiant"
+        val walkingWake = "Walking_Wake"
+        val ironLeaves = "Iron_Leaves"
+    }
+    private fun loadBulbapediaPage(name: String, speciesName: String, varietyAmount: Int) {
+        val wrongName = WrongNames()
+        var changedName = ""
+        var bulbapediaURL = ""
+        Log.d("Bulbapedia top lvl", "name is $name spec is $speciesName var amt is $varietyAmount")
+        if (varietyAmount >= 1 && name !in wrongName.wrongNamesList) {
+            Log.d("bulbapedia if var amt", " species name is $speciesName")
+            bulbapediaURL = getString(R.string.bulbapediaLink, speciesName)
+        } else if (name in wrongName.wrongNamesList) {
+            Log.d("bulbapedia wrong name", "name was $name")
+            when (name) {
+                "Nidoran-f" -> changedName = wrongName.nidoranF
+                "Nidoran-m" -> changedName = wrongName.nidoranM
+                "Mr-mime" -> changedName = wrongName.mrMime
+                "Ho-oh" -> changedName = wrongName.hoOh
+                "Mime-jr" -> changedName = wrongName.mimeJr
+                "Type-null" -> changedName = wrongName.typeNull
+                "Tapu-koko" -> changedName = wrongName.tapuKoko
+                "Tapu-lele" -> changedName = wrongName.tapuLele
+                "Tapu-bulu" -> changedName = wrongName.tapuBulu
+                "Tapu-fini" -> changedName = wrongName.tapuFini
+                "Mr-rime" -> changedName = wrongName.mrRime
+                "Great-tusk" -> changedName = wrongName.greatTusk
+                "Scream-tail" -> changedName = wrongName.screamTail
+                "Brute-bonnet" -> changedName = wrongName.bruteBonnet
+                "Flutter-mane" -> changedName = wrongName.flutterMane
+                "Slither-wing" -> changedName = wrongName.slitherWing
+                "Sandy-shocks" -> changedName = wrongName.sandyShocks
+                "Iron-treads" -> changedName = wrongName.ironTreads
+                "Iron-bundle" -> changedName = wrongName.ironBundle
+                "Iron-hands" -> changedName = wrongName.ironHands
+                "Iron-jugulis" -> changedName = wrongName.ironJugulis
+                "Iron-moth" -> changedName = wrongName.ironMoth
+                "Iron-thorns" -> changedName = wrongName.ironThorns
+                "Wo-chien" -> changedName = wrongName.woChien
+                "Chien-pao" -> changedName = wrongName.chienPao
+                "Ting-lu" -> changedName = wrongName.tingLu
+                "Chi-yu" -> changedName = wrongName.chiYu
+                "Roaring-moon" -> changedName = wrongName.roaringMoon
+                "Iron-valiant" -> changedName = wrongName.ironValiant
+                "Walking-wake" -> changedName = wrongName.walkingWake
+                "Iron-leaves" -> changedName = wrongName.ironLeaves
+            }
+            Log.d("bulbapedia wrong name", "name is now $changedName")
+            bulbapediaURL = getString(R.string.bulbapediaLink, changedName)
+        } else {
+            Log.d("bulbapedia else","name is $name")
+            bulbapediaURL = getString(R.string.bulbapediaLink, name)
+        }
+        Log.d("bulbapedia lastly", " url is $bulbapediaURL")
         binding.bulbapediaWv.loadUrl(bulbapediaURL)
     }
     override fun onDestroyView() {

@@ -23,9 +23,11 @@ data class Variant(
     @ColumnInfo(name = "weight")
     val weight: Int,
     @ColumnInfo(name = "species")
-    val species: Int,
+    val speciesID: Int,
     @ColumnInfo(name = "officialImg")
     val officialImg: String?,
+    @ColumnInfo(name = "speciesName")
+    val speciesName: String?
 //    @ColumnInfo(name = "shinyImg")
 //    val shinyImg: String?
 ) : Parcelable {
@@ -38,7 +40,8 @@ data class Variant(
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
-        parcel.readString()
+        parcel.readString(),
+        parcel.readString(),
     )
 
     fun toFavPokemon(): FavoritePokemon {
@@ -52,7 +55,8 @@ data class Variant(
             weight = weight,
 //            moves = moves,
             officialImg = officialImg,
-            speciesNumber = species
+            speciesNumber = speciesID,
+            speciesName = speciesName
 //            shinyImg =  shinyImg
 
 
@@ -67,8 +71,9 @@ data class Variant(
         parcel.writeString(type2)
         parcel.writeInt(height)
         parcel.writeInt(weight)
-        parcel.writeInt(species)
+        parcel.writeInt(speciesID)
         parcel.writeString(officialImg)
+        parcel.writeString(speciesName)
     }
 
     override fun describeContents(): Int {
