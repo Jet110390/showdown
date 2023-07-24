@@ -50,6 +50,10 @@ data class Pokemon(
     val officialImg: String?,
     @ColumnInfo(name = "speciesNumber")
     val speciesNumber: Int?,
+    @ColumnInfo(name = "speciesName")
+    val speciesName: String?,
+    @ColumnInfo(name = "variants")
+    val variantAmount: Int?
 
 //    @ColumnInfo(name = "shinyImg")
 //    val shinyImg: String?,
@@ -73,7 +77,9 @@ data class Pokemon(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readValue(Int::class.java.classLoader) as? Int
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readInt()
     ) {
     }
 
@@ -97,7 +103,8 @@ data class Pokemon(
 //            title = title,
 //            preEvo = preEvo,
             officialImg = officialImg,
-            speciesNumber = speciesNumber
+            speciesNumber = speciesNumber,
+            speciesName = speciesName
 //            shinyImg =  shinyImg
 
 
@@ -123,6 +130,8 @@ data class Pokemon(
         parcel.writeString(preEvo)
         parcel.writeString(officialImg)
         parcel.writeValue(speciesNumber)
+        parcel.writeString(speciesName)
+        parcel.writeValue(variantAmount)
     }
 
     override fun describeContents(): Int {

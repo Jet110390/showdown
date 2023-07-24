@@ -62,11 +62,11 @@ class PokemonInfoRepository @Inject constructor(
         }
     }
 
-    suspend fun getPokemonInfo(pokeInfo: Urls): PokeInfoDto? {
+    suspend fun getPokemonInfo(name: String): PokeInfoDto? {
 
         return try {
 //            val response1=showdownService.getPokeInfo(pokeInfo.name)
-            val response = showdownService.getPokeInfo(pokeInfo.name)
+            val response = showdownService.getPokeInfo(name)
             if (response.isSuccessful) {
 //                Log.d("getPokemonInfo success ${response.body()?.order}","res: ${response.body()?.name}")
                 return response.body()
@@ -81,289 +81,6 @@ class PokemonInfoRepository @Inject constructor(
         }
     }
 
-
-    suspend fun getSpeciesList(pokeInfo: List<PokeInfoDto>): MutableList<SpeciesEntry> {
-        val speciesList: MutableList<SpeciesEntry> = mutableListOf()
-        val variantList: MutableList<VarietyEntry> = mutableListOf()
-        val legendsImgs: MutableList<String> = mutableListOf(
-            "https://i.ibb.co/G7w8zgn/qwilfish-hisui-official.png",
-            "https://i.ibb.co/YyGMqbP/electrode-hisui-official.png",
-            "https://i.ibb.co/V38HNcP/sneasel-hisui-official.png",
-            "https://i.ibb.co/rG7HGJX/lilligant-hisui-official.png",
-            "https://i.ibb.co/j53ZZnJ/basculin-white-striped-official.png",
-            "https://i.ibb.co/TRHg6qf/sliggoo-hisui-official.png",
-            "https://i.ibb.co/K0DccdJ/goodra-hisui-official.png",
-            "https://i.ibb.co/0FJpc3H/avalugg-hisui-official.png",
-            "https://i.ibb.co/2kF27n8/arcanine-hisui-sprite.png",
-            "https://i.ibb.co/hmz8kPq/avalugg-hisui-sprite.png",
-            "https://i.ibb.co/rMgNByq/basculin-white-striped-sprite.png",
-            "https://i.ibb.co/h9YJnKL/braviary-hisui-sprite.png",
-            "https://i.ibb.co/cbvfznh/decidueye-hisui-sprite.png",
-            "https://i.ibb.co/v4DMQdY/dialga-origin-sprite.png",
-            "https://i.ibb.co/nnhwS3t/electrode-hisui-sprite.png",
-            "https://i.ibb.co/86CHtMs/goodra-hisui-sprite.png",
-            "https://i.ibb.co/CsHFx9C/growlithe-hisui-sprite.png",
-            "https://i.ibb.co/BcfDNdr/lilligant-hisui-sprite.png",
-            "https://i.ibb.co/ZNqwTRD/arcanine-hisui-official.png",
-            "https://i.ibb.co/YDngTNH/palkia-origin.png",
-            "https://i.ibb.co/f1wt0Lq/decidueye-hisui-official.png",
-            "https://i.ibb.co/DpLkX6R/dialga-origin-official.png",
-            "https://i.ibb.co/VvcGDZx/palkia-origin-official.png",
-            "https://i.ibb.co/gJwgHd5/braviary-hisui-official.png",
-            "https://i.ibb.co/YQj6R8t/growlithe-hisui-official.png",
-            "https://i.ibb.co/6DHwZsK/samurott-hisui-official.png",
-            "https://i.ibb.co/VQGx9Bm/typhlosion-hisui-official.png",
-            "https://i.ibb.co/Y3g0j4H/voltorb-hisui-official.png",
-            "https://i.ibb.co/6YrsLqM/zoroark-hisui-official.png",
-            "https://i.ibb.co/MgqC06Z/zorua-hisui-official.png",
-            "https://i.ibb.co/b3KTHrj/qwilfish-hisui-sprite.png",
-            "https://i.ibb.co/MpgvbYb/samurott-hisui-sprite.png",
-            "https://i.ibb.co/BPJGMhv/sligoo-hisui-sprite.png",
-            "https://i.ibb.co/R4r8mzg/sneasel-hisui-sprite.png",
-            "https://i.ibb.co/P59x0Vn/typhlosion-hisui-sprite.png",
-            "https://i.ibb.co/kDprYrY/voltorb-hisui-sprite.png",
-            "https://i.ibb.co/rc9xFrQ/zoroark-hisui-sprite.png",
-            "https://i.ibb.co/ZMCWygt/zorua-hisui-sprite.png",
-            "https://i.ibb.co/GPDYjcf/sneasler-official.png",
-            "https://i.ibb.co/68zPzWG/ursaluna-official.png",
-            "https://i.ibb.co/2vYM2PX/overqwil-official.png",
-            "https://i.ibb.co/BNDrw6b/enamorus-therian-official.png",
-            "https://i.ibb.co/sRWsSgM/enamorus-incarnate-official.png",
-            "https://i.ibb.co/RCVCNH1/basculegion-female-official.png",
-            "https://i.ibb.co/Php9CR2/basculegion-female-sprite.png",
-            "https://i.ibb.co/qrp8ZwS/basculegion-male-sprite.png",
-            "https://i.ibb.co/7Vn3cVq/enamorus-incarnate-sprite.png",
-            "https://i.ibb.co/HY4WmHp/enamorus-therian-sprite.png",
-            "https://i.ibb.co/30jZW5B/kleavor-sprite.png",
-            "https://i.ibb.co/Q89sGzQ/overqwil-sprite.png",
-            "https://i.ibb.co/QCTwg6c/kleavor-official.png",
-            "https://i.ibb.co/m5NgSWv/basculegion-male-official.png",
-            "https://i.ibb.co/SPm1zhw/wyrdeer-official.png",
-            "https://i.ibb.co/N7PptbG/sneasler-sprite.png",
-            "https://i.ibb.co/94s2FfB/ursaluna-sprite.png",
-            "https://i.ibb.co/BVhGW1f/wyrdeer-sprite.png",
-        )
-        try {
-            for (i in 0..pokeInfo.size - 1) {
-                val response1 = showdownService.getSpecies(pokeInfo[i].id)
-                if (response1.isSuccessful) {
-                    val speciesNumber = pokeInfo[i].species.url.replace(
-                        "https://pokeapi.co/api/v2/pokemon-species/",
-                        ""
-                    ).takeWhile { it.isDigit() }.toInt()
-                    var flavTextData =
-                        response1.body()?.flavorTextEntries?.find { it.language.name.equals("en") }
-                    val genus = response1.body()?.genera?.find { it.language.name.equals("en") }
-                    val evolvesFrom =
-                        response1.body()?.evolvesFromSpecies?.name ?: "no pre-evolution"
-                    val varieties = response1.body()?.varieties
-
-                    if (varieties?.size!! > 1) {
-                        varieties.map {
-                            if (it.pokemon.name != varieties[0].pokemon.name + "-totem"
-                                && it.pokemon.name != varieties[0].pokemon.name + "-starter"
-                                && it.pokemon.name.takeLast(3) != "cap"
-                                && it.pokemon.name != varieties[0].pokemon.name
-                                && it.pokemon.name != varieties[0].pokemon.name.replace(
-                                    "-50",
-                                    "-10"
-                                )
-                                && it.pokemon.name != varieties[0].pokemon.name + "-totem-disguised"
-                                && it.pokemon.name != varieties[0].pokemon.name + "-totem-busted"
-                                && it.pokemon.name != varieties[0].pokemon.name + "-gulping"
-                                && it.pokemon.name != varieties[0].pokemon.name + "-gorging"
-                                && it.pokemon.name != varieties[0].pokemon.name.replace(
-                                    "-full-belly",
-                                    "-hangry"
-                                )
-                                && it.pokemon.name != varieties[0].pokemon.name + "-eternamax"
-                                && it.pokemon.name != varieties[0].pokemon.name + "-dada"
-//                               && it.pokemon.name != varieties[0].pokemon.name + "-hisui"
-                                && it.pokemon.name != varieties[0].pokemon.name + "-cosplay"
-//                               && it.pokemon.name != varieties[0].pokemon.name + "-origin"
-                                && it.pokemon.name != varieties[0].pokemon.name + "-original-cap"
-//                               && it.pokemon.name != varieties[0].pokemon.name.replace(
-//                                   "-red-striped",
-//                                   "-white-striped"
-//                               )
-                            ) {
-//                               better way maybe split these up??
-                                val info = showdownService.getPokeInfo(it.pokemon.name)
-//                               val getspecies = showdownService.getSpecies(info.body()?.id!!)
-//                               var flavTextData=getspecies.body()?.flavorTextEntries?.find { it.language.name.equals("en")}
-//                               val genus = getspecies.body()?.genera?.get(7)?.genus
-//                               val evolvesFrom=getspecies.body()?.evolvesFromSpecies?.name ?: "no pre-evolution"
-////                                Log.d("getSpecies success","${pokeInfo.name}")
-//                               var species = SpeciesEntry(
-//                                   flavTextData?.flavorText.toString(),
-//                                   genus.toString(),
-//                                   evolvesFrom)
-//                    )
-
-                                variantDao.addVariant(
-                                    VarietyEntry(
-                                        info.body()?.id!!,
-                                        info.body()?.name!!,
-//                                       info.body()?.sprites?.frontDefault!!
-//                                       if(info.body()?.sprites?.frontDefault == null){
-//                                            var url=""
-//                                               (0..legendsImgs.size-1).forEach { i ->
-//                                                   if (info.body()?.name!! + "-sprite" in legendsImgs[i]) {
-////                                                       Log.d("success","${legendsImgs[i]}")
-////                                                       legendsImgs[i]
-//                                                       url=legendsImgs[i]
-//                                                   }
-//                                               }
-//
-//                                           url
-//                                       }else{"${info.body()?.sprites?.frontDefault}"},
-                                        info.body()?.sprites?.frontDefault,
-                                        info.body()?.types?.get(0)?.type?.name,
-                                        if (info.body()?.types?.size!! > 1) {
-                                            info.body()?.types!![1]?.type?.name
-                                        } else {
-                                            "none"
-                                        },
-                                        info.body()?.height!!,
-                                        info.body()?.weight!!,
-                                        info.body()?.species?.url?.replace(
-                                            "https://pokeapi.co/api/v2/pokemon-species/",
-                                            ""
-                                        )?.takeWhile { it.isDigit() }!!.toInt(),
-//                                       if(info.body()?.sprites?.other?.officialArtwork?.frontDefault == null){
-//                                           var url=""
-//                                               (0..legendsImgs.size-1).forEach { i ->
-//                                                   if (info.body()?.name!! + "-official"  in legendsImgs[i]) {
-////                                                       Log.d("success","${legendsImgs[i]}")
-//                                                       url=legendsImgs[i]
-//                                                   }
-//                                               }
-//
-//                                           url
-//                                       }else{"${info.body()?.sprites?.other?.officialArtwork?.frontDefault}"}
-                                        info.body()?.sprites?.other?.officialArtwork?.frontDefault,
-                                    ).toVariant()
-                                )
-
-                                variantList.add(
-                                    VarietyEntry(
-                                        info.body()?.id!!,
-                                        info.body()?.name!!,
-//                                       if(info.body()?.sprites?.frontDefault == null){
-//                                           var url = ""
-//                                           (0..legendsImgs.size-1).forEach { i ->
-//                                               if (info.body()?.name!! + "-sprite"  in legendsImgs[i]) {
-////                                                   Log.d("success","${legendsImgs[i]}")
-////                                                   legendsImgs[i]
-//                                                   url=legendsImgs[i]
-//                                               }
-//                                           }
-////                                           Log.d("sprite","${url}")
-//                                           url
-//                                       }else{"${info.body()?.sprites?.frontDefault}"},
-                                        info.body()?.sprites?.frontDefault,
-                                        info.body()?.types?.get(0)?.type?.name,
-                                        if (info.body()?.types?.size!! > 1) {
-                                            info.body()?.types!![1]?.type?.name
-                                        } else {
-                                            "none"
-                                        },
-                                        info.body()?.height!!,
-                                        info.body()?.weight!!,
-                                        info.body()?.species?.url?.replace(
-                                            "https://pokeapi.co/api/v2/pokemon-species/",
-                                            ""
-                                        )?.takeWhile { it.isDigit() }!!.toInt(),
-//                                       if(info.body()?.sprites?.other?.officialArtwork?.frontDefault == null){
-//                                           var url=""
-//                                               (0..legendsImgs.size-1).forEach { i ->
-//                                                   if (info.body()?.name!! + "-official"  in legendsImgs[i]) {
-////                                                       Log.d("success","${legendsImgs[i]}")
-//                                                       url=legendsImgs[i]
-//                                                   }
-//                                               }
-//
-//                                           url
-//                                       }else{"${info.body()?.sprites?.other?.officialArtwork?.frontDefault}"}
-                                        info.body()?.sprites?.other?.officialArtwork?.frontDefault
-                                    )
-                                )
-                                Log.d("getVariety", "${info.body()?.name}")
-                            }
-                        }
-                    }
-                    var species = SpeciesEntry(
-                        flavTextData?.flavorText.toString(),
-                        genus?.genus.toString(),
-                        evolvesFrom,
-                        variantList,
-                        speciesNumber
-                    )
-                    speciesList.add(species)
-                } else {
-                    Log.d("getSpecies error", "${response1.message()}, ${response1.errorBody()}")
-                    null
-                }
-            }
-//             Log.d("growlithe response","${showdownService.getPokeInfo("growlithe-hisui")}")
-//             speciesList[59].varieties.add(VarietyEntry(
-//                 10230,
-//                 "arcanine-hisui",
-//                 "mipmap-hdpi/arcanine_hisui_sprite_foreground.png",
-//                 "fire",
-//                 "rock",
-//                 20,
-//                 1680,
-//                 59,
-//                 "mipmap-xxxhdpi/arcanine_hisui_official_foreground.png")
-//             )
-//             variantDao.addVariant(
-//                 VarietyEntry(
-//                     10230,
-//                     "arcanine-hisui",
-//                     "https://i.ibb.co/2kF27n8/Arcanine-hisui.png",
-//                     "fire",
-//                     "rock",
-//                     20,
-//                     1680,
-//                     59,
-//                     "https://archives.bulbagarden.net/media/upload/6/63/059Arcanine-Hisui.png"
-////                     "mipmap-xxxhdpi/arcanine_hisui_official_foreground.png"
-//                     ).toVariant()
-//                 )
-        } catch (ex: Exception) {
-            Log.d("getSpecies exception", "cause: ${ex}")
-            null
-        }
-        return speciesList
-    }
-//    suspend fun getSpecies(pokeInfo: Urls): SpeciesEntry? {
-//        return try {
-//            val response1=showdownService.getPokeInfo(pokeInfo.name)
-//            val response2 = response1?.body()?.order?.let { showdownService.getSpecies(it) }
-//            if(response2?.isSuccessful == true) {
-////                Log.d("getSpecies success","res: ${response.body()?.name}")
-//                var flavTextData=response2.body()?.flavorTextEntries?.find { it.language.name.equals("en")}
-//                val genus = response2.body()?.genera?.get(7)?.genus
-//                val evolvesFrom=response2.body()?.evolvesFromSpecies?.name ?: "no pre-evolution"
-//                Log.d("getSpecies success","${pokeInfo.name}")
-//                var species = SpeciesEntry(
-//                    flavTextData?.flavorText.toString(),
-//                    genus.toString(),
-//                    evolvesFrom
-//                    )
-//                return species
-//            }
-//            else{
-//                Log.d("getSpecies error","${response1.body()?.name} ${response1.body()?.order} $response2")
-//                null
-//            }
-//
-//        } catch (ex: Exception) {
-//            Log.d("getSpecies exception","cause: ${ex.cause} ${ex.message}")
-//            null
-//        }
-//    }
     private suspend fun getSpeciesData(pokeInfo: PokeInfoDto): SpeciesEntry{
         val variantList: MutableList<VarietyEntry> = mutableListOf()
         var species = SpeciesEntry(
@@ -371,8 +88,11 @@ class PokemonInfoRepository @Inject constructor(
             "",
             "",
             variantList,
+            0,
+            "",
             0
         )
+    var variant = ""
 
         try {
             val response1= showdownService.getSpecies(pokeInfo.id)
@@ -387,13 +107,16 @@ class PokemonInfoRepository @Inject constructor(
                 val evolvesFrom =
                     response1.body()?.evolvesFromSpecies?.name ?: "no pre-evolution"
                 val varieties = response1.body()?.varieties
+                val speciesName = response1.body()?.name
+                val varietyAmount = response1.body()?.varieties?.size?.minus(1)
 
                 if (varieties?.size!! > 1) {
                     varieties.map {
-                        if (it.pokemon.name != varieties[0].pokemon.name + "-totem"
+                        if (!it.isDefault
+                            && it.pokemon.name != varieties[0].pokemon.name + "-totem"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-totem-alola"
                             && it.pokemon.name != varieties[0].pokemon.name + "-starter"
                             && it.pokemon.name.takeLast(3) != "cap"
-                            && it.pokemon.name != varieties[0].pokemon.name
                             && it.pokemon.name != varieties[0].pokemon.name.replace(
                                 "-50",
                                 "-10"
@@ -410,20 +133,35 @@ class PokemonInfoRepository @Inject constructor(
                             && it.pokemon.name != varieties[0].pokemon.name + "-dada"
                             && it.pokemon.name != varieties[0].pokemon.name + "-cosplay"
                             && it.pokemon.name != varieties[0].pokemon.name + "-original-cap"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-own-tempo"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-battle-bond"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-limited-build"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-sprinting-build"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-swimming-build"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-gliding-build"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-low-power-mode"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-drive-mode"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-aquatic-mode"
+                            && it.pokemon.name != varieties[0].pokemon.name + "-glide-mode"
                         ) {
-                            val info = pokemonDao.getPokemonByName(it.pokemon.name)
+                            val info = getPokemonInfo(it.pokemon.name)
+                            Log.d("species info", "${it.pokemon.name}")
+                            variant = it.pokemon.name
 
                             variantDao.addVariant(
                                 VarietyEntry(
                                     info?.id!!,
                                     info?.name!!,
-                                    info?.image,
-                                    info?.type1,
-                                    info.type2 ?: "none",
+                                    info?.sprites?.frontDefault,
+                                    info?.types[0]?.type?.name,
+                                    if(info.types.size>1){
+                                    info?.types[1]?.type?.name
+                                    }else{"none"},
                                     info?.height!!,
                                     info?.weight!!,
-                                    info?.speciesNumber!!,
-                                    info?.officialImg
+                                    speciesNumber,
+                                    info?.sprites?.other?.officialArtwork?.frontDefault,
+                                    speciesName
                                 ).toVariant()
                             )
 
@@ -431,97 +169,45 @@ class PokemonInfoRepository @Inject constructor(
                                 VarietyEntry(
                                     info?.id!!,
                                     info?.name!!,
-                                    info?.image,
-                                    info?.type1,
-                                    info.type2 ?: "none",
+                                    info?.sprites?.frontDefault,
+                                    info?.types[0]?.type?.name,
+                                    if(info.types.size>1){
+                                        info?.types[1]?.type?.name
+                                    }else{"none"},
                                     info?.height!!,
                                     info?.weight!!,
-                                    info?.speciesNumber!!,
-                                    info?.officialImg
+                                    speciesNumber,
+                                    info?.sprites?.other?.officialArtwork?.frontDefault,
+                                    speciesName
                                 )
                             )
+//                            form(rotom), divergent(moltres-g), mega, gmax, version(zacian-crowned), alternate(urshifu-rapd strike)
                         }
                     }
                 }
-                species= SpeciesEntry(
+                species = SpeciesEntry(
                     flavTextData?.flavorText.toString(),
                     genus?.genus.toString(),
                     evolvesFrom,
                     variantList,
-                    speciesNumber
+                    speciesNumber,
+                    speciesName,
+                    varietyAmount
                 )
             }
         }
         catch (ex: Exception){
-            Log.d("getSpecies exception", "cause: ${ex}")
+            Log.d("getSpecies exception", "${variant} failed because: ${ex}")
             null
         }
         return species
-    }
-
-    suspend fun getPokedexList(
-        pokemonInfo: MutableList<PokeInfoDto>,
-        speciesInfo: MutableList<SpeciesEntry>
-    ): DataState<List<Pokemon>> {
-        val isDbEmpty = pokemonDao.getPokemonCount() == 0
-        var pokeList: MutableList<DexEntry> = mutableListOf()
-        if (isDbEmpty) {
-            val result = try {
-                var count = 0
-                for (i in 0 until pokemonInfo.size) {
-                    pokeList.add(
-                        DexEntry(
-                            pokemonInfo[i].id,
-                            pokemonInfo[i].name,
-                            pokemonInfo[i].sprites?.frontDefault!!,
-                            pokemonInfo[i].types[0]?.type?.name,
-                            if (pokemonInfo[i].types.size > 1) {
-                                pokemonInfo[i].types[1]?.type?.name
-                            } else {
-                                "none"
-                            },
-                            pokemonInfo[i].height,
-                            pokemonInfo[i].weight,
-                            pokemonInfo[i].stats[0].baseStat,
-                            pokemonInfo[i].stats[1].baseStat,
-                            pokemonInfo[i].stats[2].baseStat,
-                            pokemonInfo[i].stats[3].baseStat,
-                            pokemonInfo[i].stats[4].baseStat,
-                            pokemonInfo[i].stats[5].baseStat,
-                            speciesInfo[i],
-                            pokemonInfo[i].sprites?.other?.officialArtwork?.frontDefault
-                        )
-                    )
-                    count++
-                }
-
-                if (pokeList.size != null) {
-                    val dexList = pokeList.map {
-                        it.toPokemon()
-                    }
-                    pokemonDao.upsertPokemonList(dexList)
-                    DataState.Success(dexList)
-                } else {
-                    DataState.Error("Could not fetch any pokemon")
-                }
-
-            } catch (ex: Exception) {
-                Log.d("heres the error", "${ex.message} & ${ex.cause} exception: $ex")
-                DataState.Error(ex.message ?: "Unexpected error.")
-            }
-            return result
-        } else {
-            // If db not empty return db contents
-            val dbResult = pokemonDao.getAllPokemon()
-            return DataState.Success(dbResult)
-        }
     }
 
     private fun getPokedexEntry(
         pokemonInfo: PokeInfoDto,
         speciesInfo: SpeciesEntry
     ): Pokemon {
-        var pokemon = Pokemon(0, "", "", "", "", 0, 0, "", 0, 0, 0, 0, 0, 0, "", "", "", 0)
+        var pokemon = Pokemon(0, "", "", "", "", 0, 0, "", 0, 0, 0, 0, 0, 0, "", "", "", 0,"",0)
         try {
             pokemon = DexEntry(
                 pokemonInfo.id,
@@ -555,9 +241,11 @@ class PokemonInfoRepository @Inject constructor(
     suspend fun getPokedexList2(): DataState<List<Pokemon>> {
         val isDbEmpty = pokemonDao.getPokemonCount() == 0
         val dex: MutableList<Pokemon> = mutableListOf()
-        if (isDbEmpty) {
+        val currentPokeAmount = 1010
+        val fullDex = pokemonDao.getPokemonCount() == currentPokeAmount
+        if (isDbEmpty || !fullDex) {
             val result = try {
-                for (i in 1..1010) {
+                for (i in 1..currentPokeAmount) {
                     val response = getPokeInfoViaDexNumber(i.toString())
                     response.let { poke ->
                         dex.add(getPokedexEntry(poke!!, getSpeciesData(poke)))
